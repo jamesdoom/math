@@ -8,6 +8,7 @@ export type LessonStep =
       body: string;
       lines?: string[];
       graph?: GraphSpec;
+      comparisonGraphs?: GraphSpec[];
       table?: Point[];
     }
   | {

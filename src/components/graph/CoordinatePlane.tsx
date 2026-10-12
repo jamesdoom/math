@@ -1,10 +1,17 @@
 import { useId } from "react";
 import type { GraphSpec, Point } from "../../types/practice";
-import { graphBounds, lineEndpoints } from "../../utils/linear";
+import { graphBounds, lineEndpoints, curveValue } from "../../utils/linear";
 export function CoordinatePlane({ spec }: { spec: GraphSpec }) {
   const id = useId().replace(/:/g, "");
   const bounds = graphBounds(spec);
   const { xMin, xMax, yMin, yMax } = bounds;
+  const drawingBounds = spec.domain
+    ? {
+        ...bounds,
+        xMin: Math.max(xMin, spec.domain.min),
+        xMax: Math.min(xMax, spec.domain.max),
+      }
+    : bounds;
   const px = (x: number) => 50 + ((x - xMin) / (xMax - xMin)) * 400;
   const py = (y: number) => 420 - ((y - yMin) / (yMax - yMin)) * 360;
   const xStep = Math.max(1, Math.ceil((xMax - xMin) / 12));
@@ -19,7 +26,7 @@ export function CoordinatePlane({ spec }: { spec: GraphSpec }) {
   );
   const endpoints =
     spec.model.kind === "line"
-      ? lineEndpoints(spec.model.slope, spec.model.intercept, bounds)
+      ? lineEndpoints(spec.model.slope, spec.model.intercept, drawingBounds)
       : spec.model.kind === "vertical"
         ? [
             { x: spec.model.x, y: yMin },
@@ -28,6 +35,19 @@ export function CoordinatePlane({ spec }: { spec: GraphSpec }) {
         : [];
   const points: Point[] =
     spec.model.kind === "points" ? spec.model.points : (spec.points ?? []);
+  const model = spec.model;
+  const curve =
+    model.kind === "curve"
+      ? Array.from({ length: 121 }, (_, i) => {
+          const x =
+            drawingBounds.xMin +
+            (i * (drawingBounds.xMax - drawingBounds.xMin)) / 120;
+          return {
+            x,
+            y: curveValue(model.shape, model.scale, model.offset, x),
+          };
+        })
+      : [];
   const triangle =
     spec.slopeTriangle &&
     points.length === 2 &&
@@ -96,10 +116,31 @@ export function CoordinatePlane({ spec }: { spec: GraphSpec }) {
               y1={py(endpoints[0].y)}
               x2={px(endpoints[1].x)}
               y2={py(endpoints[1].y)}
-              markerStart={"url(#" + id + "arrow)"}
-              markerEnd={"url(#" + id + "arrow)"}
+              markerStart={spec.domain ? undefined : "url(#" + id + "arrow)"}
+              markerEnd={spec.domain ? undefined : "url(#" + id + "arrow)"}
             />
           )}{" "}
+          {curve.length > 0 && (
+            <polyline
+              className="graph-curve"
+              points={curve.map((p) => `${px(p.x)},${py(p.y)}`).join(" ")}
+              fill="none"
+              stroke="#c8ed9f"
+              strokeWidth="3"
+            />
+          )}
+          {spec.domain &&
+            model.kind === "line" &&
+            [spec.domain.min, spec.domain.max].map((x) => (
+              <circle
+                className="graph-endpoint"
+                key={x}
+                cx={px(x)}
+                cy={py(model.slope * x + model.intercept)}
+                r="5"
+                fill="#c8ed9f"
+              />
+            ))}
           {triangle && (
             <g className="slope-triangle">
               <path

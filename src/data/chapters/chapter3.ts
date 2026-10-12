@@ -6,6 +6,10 @@ import {
   independentProblemMap,
   question,
   line,
+  classificationProblemIds,
+  domainProblemIds,
+  continuousLengthGraph,
+  discreteTicketGraph,
 } from "./chapter3Practice";
 function guided(
   id: string,
@@ -28,6 +32,49 @@ function guided(
 }
 const g = guided;
 export const guidedProblems: PracticeProblem[] = [
+  g("guided-domains", "linear-models", [
+    [
+      "g-domain-choose",
+      "linear-models",
+      "A booth sells whole tickets for $6 each; no more than 2 tickets per customer.",
+      "Which values can x, the ticket count, take?",
+      "{0, 1, 2}",
+      "The allowed counts are discrete whole values. A count such as 1.5 does not represent a whole ticket.",
+      [
+        [
+          "Every real number from 0 to 2",
+          "That includes fractional ticket counts, which this situation does not allow.",
+        ],
+        ["{0, 6, 12}", "Those values are costs, not ticket counts."],
+      ],
+      [
+        "Identify the input quantity.",
+        "Use only feasible whole counts up to 2.",
+      ],
+    ],
+    [
+      "g-domain-graph",
+      "linear-models",
+      "Now consider a cord cut to any length from 0 to 2 metres.",
+      "How should y = 6x be graphed in this situation?",
+      "Connect the segment from (0, 0) to (2, 12)",
+      "Every intervening length is available, so the contextual graph is continuous and bounded.",
+      [
+        [
+          "Plot only the three whole-number points",
+          "Lengths such as 0.5 metres are allowed, so include their outputs too.",
+        ],
+        [
+          "Extend the line forever",
+          "The situation limits lengths to the stated interval.",
+        ],
+      ],
+      [
+        "Decide whether intervening values are meaningful.",
+        "Connect only over the allowed interval.",
+      ],
+    ],
+  ]),
   g("guided-pattern", "linear-graphs", [
     [
       "g-pattern-rate",
@@ -290,6 +337,8 @@ export const guidedProblems: PracticeProblem[] = [
   ]),
 ];
 interface LessonContent {
+  checkpointIds?: string[];
+  comparisonGraphs?: GraphSpec[];
   id: string;
   title: string;
   skill: SkillId;
@@ -327,6 +376,7 @@ function lesson(c: LessonContent): Lesson {
         lines: c.example,
         graph: c.graph,
         table: c.table,
+        comparisonGraphs: c.comparisonGraphs,
       },
       {
         id: "visual",
@@ -350,10 +400,12 @@ function lesson(c: LessonContent): Lesson {
         type: "checkpoint",
         title: "Your turn",
         body: "Try four original problems. Your first unassisted answer provides mastery evidence; hints and feedback remain available.",
-        problemIds: independentProblems
-          .filter((p) => p.steps[0].skill === c.skill)
-          .slice(0, 4)
-          .map((p) => p.id),
+        problemIds:
+          c.checkpointIds ??
+          independentProblems
+            .filter((p) => p.steps[0].skill === c.skill)
+            .slice(0, 4)
+            .map((p) => p.id),
       },
     ],
   };
@@ -363,9 +415,8 @@ export const lessons: Lesson[] = [
     id: "inputs-and-coordinates",
     title: "Inputs, outputs, and coordinates",
     skill: "coordinates-tables",
-    supplemental: true,
     source:
-      "Supplemental bridge; original pages 1–2 unavailable and PDF file 5–6 missing. Exact missing-page topics are unverified.",
+      "Ch 3 Notes pgs 1-2.pdf · 3.3 Linear Functions · ordered pairs and solutions; original prerequisite explanation",
     body: "A function gives one output for each input. In (x, y), x tells how far left or right to go; y tells how far down or up. Substitute the input into the rule to find the output.",
     example: [
       "Use y = 2x + 1.",
@@ -426,17 +477,25 @@ export const lessons: Lesson[] = [
   }),
   lesson({
     id: "constant-rate-bridge",
-    title: "A constant rate connects the representations",
+    title: "Identify linear and nonlinear functions",
     skill: "linear-graphs",
-    supplemental: true,
     source:
-      "Supplemental bridge for missing filename pages 5–6; exact missing objectives unverified.",
-    body: "A linear pattern has a constant change in output per change in input. Compare both changes, not only the output difference. Equal input steps in a linear table produce equal output steps.",
+      "Ch 3 Notes pgs 1-2.pdf · 3.3 Linear Functions · graphs, tables, and equations",
+    body: "A linear rule can be written y = mx + b with constant m and b, and has a constant rate of change. For unrestricted inputs its graph is a nonvertical straight line; restricted inputs select points or a segment on that line. A curve or corner is nonlinear. In tables, compare output change divided by input change; input steps need not be equal.",
+    checkpointIds: classificationProblemIds.slice(0, 4),
+    comparisonGraphs: [
+      line(1, 0, "One nonvertical straight line has a constant rate."),
+      {
+        model: { kind: "curve", shape: "quadratic", scale: 1, offset: -2 },
+        description: "A curved U-shaped graph changes rate; it is nonlinear.",
+      },
+    ],
     example: [
       "For points (−2, −3), (0, 1), and (2, 5), each input step is +2 and each output step is +4.",
       "The rate is 4/2 = 2 per input unit. The output at zero is 1, so y = 2x + 1.",
       "The table, points on a straight line, and equation describe the same pattern.",
       "Contrast outputs 0, 1, 4 at inputs 0, 1, 2: equal input steps produce output changes 1 and 3. That is not a constant-rate linear pattern.",
+      "An equation like y = 5 − 2x is linear: rewrite y = −2x + 5. A rule like y = x² gives changing rates; no quadratic solving is needed to recognize that it is nonlinear.",
     ],
     graph: line(2, 1, "The output rises 4 for every input increase of 2.", [
       { x: -2, y: -3 },
@@ -450,9 +509,32 @@ export const lessons: Lesson[] = [
     ],
     guided: "guided-pattern",
     support: [
-      "A rate compares the output change with the input change.",
-      "Going from input 0 to 2 changes output 1 to 5. That is output change 4 over input change 2.",
-      "Divide 4 by 2 to get rate 2. Because the output at zero is 1, the equation is y = 2x + 1.",
+      "Look at the whole graph: one nonvertical straight line is linear. A curve or corner is not.",
+      "Increasing outputs alone are not enough. Outputs 0, 1, 4 rise by 1, then 3 for equal input steps, so their rate changes.",
+      "Inputs 0, 1, 3 and outputs 1, 3, 7 have rates 2/1 and 4/2. Both equal 2, so the table fits the linear rule y = 2x + 1.",
+    ],
+  }),
+  lesson({
+    id: "discrete-and-continuous",
+    title: "Discrete and continuous domains",
+    skill: "linear-models",
+    source:
+      "Ch 3 Notes pgs 1-2.pdf · discrete/continuous domains and contextual graphing",
+    body: "A discrete domain consists of separate allowed inputs. A continuous domain includes every real value in an interval. Decide from the situation, then draw separate dots or a connected graph only over the feasible inputs. Decimals alone do not determine the type.",
+    example: [
+      "Tickets at $4 each, with a maximum of 3: y = 4x and domain {0, 1, 2, 3}. Plot four separate points.",
+      "Ribbon at $3 per metre, any length from 0 to 2 metres: y = 3x. The domain contains every real x from 0 to 2, including 0.5 and 1.75. Draw the connected segment.",
+      "A solution point (x, y) must satisfy the equation AND the contextual domain. A point at x = 3 is not feasible for this ribbon model even though the equation gives an output.",
+      "If only pre-cut lengths 0.5, 1, 1.5 are sold, the domain is discrete—even though two of its values are decimals.",
+    ],
+    comparisonGraphs: [discreteTicketGraph, continuousLengthGraph],
+    graph: continuousLengthGraph,
+    guided: "guided-domains",
+    checkpointIds: domainProblemIds.slice(0, 4),
+    support: [
+      "Discrete means selected inputs; continuous means all inputs in an interval.",
+      "Whole tickets use dots. Ribbon cut to any permitted length uses a connected segment.",
+      "For y = 3x with every length from 0 to 2 allowed, x = 0.5 gives y = 1.5. That point lies between the endpoints and belongs to the connected segment.",
     ],
   }),
   lesson({

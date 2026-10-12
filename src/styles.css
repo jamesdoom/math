@@ -969,6 +969,23 @@ select {
 .topic-card .primary {
   margin-top: 12px;
 }
+.graph-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  align-items: start;
+}
+.graph-comparison .coordinate-plane {
+  min-width: 0;
+}
+.graph-comparison + .worked-example {
+  margin-top: 20px;
+}
+@media (max-width: 700px) {
+  .graph-comparison {
+    grid-template-columns: 1fr;
+  }
+}
 .equation {
   overflow-wrap: anywhere;
 }

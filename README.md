@@ -4,9 +4,9 @@ React, strict TypeScript, Vite, React Router, CSS, and localStorage. The current
 
 ## Content
 
-Eight five-stage lessons cover inputs and coordinates, tables and graphs, a constant-rate bridge, domain/range/intercepts, slope on graphs, slope from points/tables, slope-intercept form, and real-world models. Each includes explanations, a worked example, a graph, a two-step guided problem, four checkpoint questions, progressive help, and targeted feedback. The separate bank contains 42 original independent questions (six per skill). Skill rounds use four items; mixed rounds use one per skill.
+Nine five-stage lessons cover inputs and coordinates, tables and graphs, linear/nonlinear identification, discrete/continuous domains, domain/range/intercepts, slope on graphs, slope from points/tables, slope-intercept form, and real-world models. Each includes explanations, a worked example, a graph, a two-step guided problem, four checkpoint questions, progressive help, and targeted feedback. The bank contains 54 original independent questions across seven skills. Skill rounds use four items; mixed rounds use one per skill.
 
-The [source map](docs/chapter-3-source-map.md) documents the reviewed PDFs, the filename/handwritten-number mismatch, mathematical clarifications, and supplementation. PDF filename pages 5–6 are missing. Pages 1–2 were unavailable during implementation, but have since been supplied and inspected; their additional material and the related in-app availability labels still need to be integrated. Two supplemental bridges cover foundations and constant rate; neither claims to reconstruct the missing notes.
+The [source map](docs/chapter-3-source-map.md) documents the reviewed PDFs, the filename/handwritten-number mismatch, and mathematical clarifications. Pages 1–2 are integrated into source-backed lessons and practice. PDF filename pages 5–6 remain missing; the app makes no claim to reproduce their exact contents. Original prerequisite explanations are aligned to the available notes.
 
 ## Run and check
 
@@ -22,10 +22,10 @@ Local URL: http://127.0.0.1:5173. On this machine the npm wrapper may be broken;
 
 ## Architecture
 
-- `src/data/chapters/chapter3.ts`: chapter, eight lessons, guided problems, source labels, simpler explanations.
+- `src/data/chapters/chapter3.ts`: chapter, nine lessons, guided problems, source labels, simpler explanations.
 - `src/data/chapters/chapter3Practice.ts`: original practice bank and targeted misconceptions.
 - `src/types/`: typed curriculum, authored question steps, graph models, and student progress.
-- `src/components/graph/CoordinatePlane.tsx`: SVG grid, clipped infinite lines, horizontal/vertical lines, points, discrete plots, and textual equivalents.
+- `src/components/graph/CoordinatePlane.tsx`: SVG grid, clipped infinite lines, bounded continuous segments, horizontal/vertical lines, recognition curves, discrete plots, and textual equivalents.
 - `src/components/learning/`: tables, interactive slope/intercept controls, progressively simpler support.
 - `src/components/practice/PracticePlayer.tsx`: stepwise choices and help, with persistent first-answer evidence.
 - `src/pages/`: dashboard, data-driven chapter navigation, lesson player, practice rounds.
@@ -42,7 +42,11 @@ Mastery is rounded independent correct / independent attempts. States are not st
 
 ## Verification
 
-Strict TypeScript, the production build, and 11 domain/content/progress tests pass. An isolated browser session exercised all eight complete lesson flows and all 42 independent items across desktop and 390px mobile layouts. Checks covered source labels, slope/intercept controls, discrete graph points, progressive help, worked solutions, completion, refresh-safe first-answer evidence, practice-round resume, and preservation of legacy browser storage. No runtime/console errors or horizontal overflow were detected. Test progress was isolated from the student browser. Screenshots and the browser script are in ignored `.verification/`.
+Strict TypeScript, the production build, and 13 domain/content/progress tests pass. The isolated browser workflow exercises all nine lesson flows and all 54 independent items across desktop and 390px mobile layouts, including recognition curves, continuous domain limits, discrete graph points, source labels, slope/intercept controls, help, completion, refresh-safe evidence, round resume, and preservation of legacy storage. Screenshots and the browser script are in ignored `.verification/`.
+
+## Repository workflow
+
+The user has authorized committing and pushing verified updates to `origin/main` after every project update. This standing instruction is recorded in `AGENTS.md`.
 
 ## Limits
 

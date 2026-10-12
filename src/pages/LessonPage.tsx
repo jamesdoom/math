@@ -96,6 +96,13 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
               <p className="lesson-intro">{current.body}</p>
               {current.type === "example" && (
                 <>
+                  {current.comparisonGraphs && (
+                    <div className="graph-comparison">
+                      {current.comparisonGraphs.map((graph) => (
+                        <CoordinatePlane key={graph.description} spec={graph} />
+                      ))}
+                    </div>
+                  )}
                   {current.lines && (
                     <ol className="worked-example">
                       {current.lines.map((line) => (

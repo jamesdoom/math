@@ -11,10 +11,9 @@ export function ChapterPage() {
         <p>{chapter3.description}</p>
       </div>
       <aside className="callout">
-        The PDF file for pages 5–6 is missing. A supplemental foundation bridges
-        coordinates, inputs, and outputs; it does not reproduce the missing
-        notes. The listed pages 1–2 file was also unavailable at its supplied
-        path.
+        Pages 1–2 are now integrated: linear versus nonlinear functions and
+        discrete versus continuous domains. The PDF file numbered pages 5–6
+        remains missing; its exact contents are unverified.
       </aside>
       <div className="topic-grid">
         {chapter3.topics.map((topic, index) => (

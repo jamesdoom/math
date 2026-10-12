@@ -7,6 +7,7 @@ import {
   equation,
   lineEndpoints,
   evaluateChoice,
+  curveValue,
 } from "../src/utils/linear";
 import {
   chapter3,
@@ -32,9 +33,9 @@ import {
 import { mastery, masteryState } from "../src/utils/mastery";
 test("Chapter 3 references resolve; sources and supplemental material are explicit", () => {
   assert.equal(chapter3.number, 3);
-  assert.equal(lessons.length, 8);
-  assert.equal(lessons.filter((l) => l.supplemental).length, 2);
-  assert.equal(guidedProblems.length, 8);
+  assert.equal(lessons.length, 9);
+  assert.equal(lessons.filter((l) => l.supplemental).length, 0);
+  assert.equal(guidedProblems.length, 9);
   for (const lesson of lessons) {
     assert.ok(lesson.source);
     assert.equal(lesson.steps.length, 5);
@@ -44,13 +45,13 @@ test("Chapter 3 references resolve; sources and supplemental material are explic
         for (const id of step.problemIds) assert.ok(problems[id], id);
   }
 });
-test("42 independent items cover seven skills with meaningful feedback and unique choices", () => {
-  assert.equal(independentProblems.length, 42);
-  assert.equal(new Set(independentProblems.map((p) => p.id)).size, 42);
+test("54 independent items cover seven skills with meaningful feedback and unique choices", () => {
+  assert.equal(independentProblems.length, 54);
+  assert.equal(new Set(independentProblems.map((p) => p.id)).size, 54);
   for (const skill of practiceSkills)
     assert.equal(
       independentProblems.filter((p) => p.steps[0].skill === skill).length,
-      6,
+      skill === "linear-graphs" ? 13 : skill === "linear-models" ? 11 : 6,
     );
   for (const p of Object.values(problems)) {
     for (const s of p.steps) {
@@ -63,6 +64,58 @@ test("42 independent items cover seven skills with meaningful feedback and uniqu
       for (const c of s.choices)
         if (c.id !== s.answer) assert.ok(c.misconception?.feedback);
     }
+  }
+});
+test("pages 1–2 are linked to focused lessons and relevant checkpoints", () => {
+  for (const id of [
+    "inputs-and-coordinates",
+    "constant-rate-bridge",
+    "discrete-and-continuous",
+  ])
+    assert.match(lessons.find((l) => l.id === id)!.source, /pgs 1-2/);
+  const classification = lessons
+    .find((l) => l.id === "constant-rate-bridge")!
+    .steps.find((s) => s.type === "checkpoint")!;
+  assert.ok("problemIds" in classification);
+  if ("problemIds" in classification)
+    assert.ok(
+      classification.problemIds.every((id) => id.startsWith("classify-")),
+    );
+  assert.equal(curveValue("quadratic", 1, -2, 2), 2);
+  assert.equal(curveValue("absolute-value", 1, -2, -3), 1);
+  const discrete =
+    independentProblemMap["classify-table-nonlinear"].steps[0].table!;
+  assert.notEqual(
+    slopeBetween(discrete[0], discrete[1]),
+    slopeBetween(discrete[1], discrete[2]),
+  );
+  const linear = independentProblemMap["classify-table-linear"].steps[0].table!;
+  assert.equal(
+    slopeBetween(linear[0], linear[1]),
+    slopeBetween(linear[1], linear[2]),
+  );
+});
+test("discrete fractions and continuous restrictions are represented accurately", () => {
+  assert.equal(
+    independentProblemMap["discrete-fractional"].answer,
+    "Discrete: three separate allowed lengths",
+  );
+  const lesson = lessons.find((l) => l.id === "discrete-and-continuous")!;
+  const step = lesson.steps.find((s) => s.type === "visual")!;
+  assert.ok("graph" in step);
+  if ("graph" in step) {
+    assert.equal(step.graph.model.kind, "line");
+    assert.deepEqual(step.graph.domain, { min: 0, max: 2 });
+    const endpoints = lineEndpoints(3, 0, {
+      xMin: 0,
+      xMax: 2,
+      yMin: 0,
+      yMax: 9,
+    });
+    assert.deepEqual(endpoints, [
+      { x: 0, y: 0 },
+      { x: 2, y: 6 },
+    ]);
   }
 });
 test("linear math handles signed inputs, fractions, and implicit coefficients", () => {

@@ -1,4 +1,12 @@
 import type { GraphSpec, Point, ProblemStep } from "../types/practice";
+export function curveValue(
+  shape: "quadratic" | "absolute-value",
+  scale: number,
+  offset: number,
+  x: number,
+) {
+  return scale * (shape === "quadratic" ? x * x : Math.abs(x)) + offset;
+}
 export function evaluateLinear(slope: number, intercept: number, x: number) {
   return slope * x + intercept;
 }

@@ -2,30 +2,30 @@
 
 Updated October 12, 2026. The student-facing curriculum is now Chapter 3 — Linear Functions. Chapter 2 curriculum, questions, navigation, and planning content have been replaced.
 
-Subsequent source update: `Ch 3 Notes pgs 1-2.pdf` is now accessible and has been visually inspected. It covers identifying linear/nonlinear functions and discrete/continuous domains. The availability table below records the initial implementation inputs; integration of the newly supplied material and correction of the in-app availability labels are pending. Filename pages 5–6 remain missing.
+`Ch 3 Notes pgs 1-2.pdf` is now accessible, visually reviewed, and integrated. It establishes linear/nonlinear recognition from graphs, tables, and equations; solution points; and discrete/continuous domains. Filename pages 5–6 remain missing.
 
 ## Source availability and the missing material
 
 The user confirmed that missing pages 5–6 refer to PDF filename numbering. The following files were read visually because they are scanned images without extractable text:
 
-| Supplied file                                      | Visible content                                                                                                                       | App lessons                                   |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `C:/Users/Brian/Downloads/Ch 3 Notes pg 3-4.pdf`   | Two pages marked 5 and 6 by hand; 3.3 Day 2: Graphing Linear Functions; tables, graphing, domain/range, intercepts, slope             | Tables to graphs; features of lines           |
-| `C:/Users/Brian/Downloads/Ch 3 Notes pgs 7-8.pdf`  | 3.6 Day 1: slopes, signed rise/run, slope types, graphs, tables, point-pair formula                                                   | Slope on graphs; slope from points and tables |
-| `C:/Users/Brian/Downloads/Ch 3 Notes pgs 9-10.pdf` | 3.6 Day 2: slope-intercept form, equations from graph features, isolating y, graphing from slope and intercept                        | Slope-intercept form; graph features          |
-| `C:/Users/Brian/Downloads/Ch 3 Notes pg 11.pdf`    | Writing and Graphing Linear Equations — Real World; initial values, rates, discrete counts, contextual domain/range and affordability | Real-world linear models                      |
-| `C:/Users/Brian/Downloads/Ch 3 Notes pgs 1-2.pdf`  | File not present at the supplied path; not read                                                                                       | No claims about its contents                  |
-| Missing filename pages 5–6                         | Not supplied; contents cannot be verified from the surrounding files                                                                  | Supplemental foundation, labeled as such      |
+| Supplied file                                      | Visible content                                                                                                                        | App lessons                                                                          |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `C:/Users/Brian/Downloads/Ch 3 Notes pg 3-4.pdf`   | Two pages marked 5 and 6 by hand; 3.3 Day 2: Graphing Linear Functions; tables, graphing, domain/range, intercepts, slope              | Tables to graphs; features of lines                                                  |
+| `C:/Users/Brian/Downloads/Ch 3 Notes pgs 7-8.pdf`  | 3.6 Day 1: slopes, signed rise/run, slope types, graphs, tables, point-pair formula                                                    | Slope on graphs; slope from points and tables                                        |
+| `C:/Users/Brian/Downloads/Ch 3 Notes pgs 9-10.pdf` | 3.6 Day 2: slope-intercept form, equations from graph features, isolating y, graphing from slope and intercept                         | Slope-intercept form; graph features                                                 |
+| `C:/Users/Brian/Downloads/Ch 3 Notes pg 11.pdf`    | Writing and Graphing Linear Equations — Real World; initial values, rates, discrete counts, contextual domain/range and affordability  | Real-world linear models                                                             |
+| `C:/Users/Brian/Downloads/Ch 3 Notes pgs 1-2.pdf`  | 3.3 Linear Functions: ordered pairs, linear/nonlinear graphs/tables/equations, solution points, discrete/continuous domains and graphs | Inputs and coordinates; linear/nonlinear identification; discrete/continuous domains |
+| Missing filename pages 5–6                         | Not supplied; exact contents cannot be verified                                                                                        | No claim to reproduce missing pages                                                  |
 
 Filename numbers and handwritten numbers differ; the app does not silently treat them as interchangeable.
 
-## Supplemental bridge
+## Pages 1–2 integration
 
-The first lesson, **Inputs, outputs, and coordinates**, provides original prerequisite instruction for the confirmed topics: functions assign one output to each input; substitute signed inputs and use order of operations; evaluate parenthesized rules; write and plot ordered pairs. This is mathematically appropriate support for the available lessons, not a reconstruction of missing pages 1–2 or filename pages 5–6. The exact missing section titles and objectives remain unknown.
+**Inputs, outputs, and coordinates** retains its stable ID and original prerequisite explanation, now aligned to the ordered-pair and solution-point material on pages 1–2. Its outdated supplemental/unavailable labels are removed.
 
-The second supplement, **A constant rate connects the representations**, bridges the table/graph material into the slope lessons. It explains signed output change per input change, equal input steps, identifying a nonconstant pattern, and using a rate and starting value to predict outputs. It sits after table graphing and is explicitly labeled as an inferred bridge for missing filename pages 5–6.
+The former constant-rate bridge retains ID `constant-rate-bridge` but is now **Identify linear and nonlinear functions**, explicitly sourced to pages 1–2. It compares a straight line with a curved graph, recognizes V-shaped corners and x² without teaching quadratic algebra, distinguishes functions from linear functions, and compares rates in tables with equal or unequal input steps. Checkpoints use newly authored recognition items rather than the earlier generic graph pool.
 
-Both supplemental labels are displayed in Chapter navigation and on their lessons. Once the missing files are available, compare their scope with these bridges and adjust rather than assuming the gap has been exactly recovered.
+The new **Discrete and continuous domains** lesson compares ticket-count dots with a bounded continuous ribbon-cost segment, defines allowed inputs, and explains why decimals alone do not determine domain type. Twelve original practice items extend the bank. No worksheet question collection is copied. Existing lesson IDs, question IDs, storage keys, and progress are retained; the new lesson is available to students who completed the earlier eight lessons.
 
 ## Mathematical clarifications
 
@@ -36,10 +36,12 @@ Both supplemental labels are displayed in Chapter navigation and on their lesson
 - Keep point order consistent in both differences for slope; reversed order in both is valid, but reversing only one difference changes the sign.
 - Contextual visit/activity counts are discrete. A depleted card stops at zero and disallows further visits when debt is prohibited. A cost equation may have a negative algebraic x-intercept that is outside its nonnegative contextual domain.
 - Graphs distinguish continuous lines from unconnected points; the visible graph window is not a domain restriction.
+- The handwritten “discrete cannot be decimals/fractions” is valid for the whole-ticket example, not a general definition. A discrete set can contain selected fractional values. Continuous domains include every real input within their specified interval, not necessarily all real numbers.
+- With a restricted discrete domain, a linear rule gives selected points on a straight line. Disconnected dots alone do not imply a nonlinear rule. A corner or genuine curvature does.
 
 ## Implemented content
 
-Eight lessons with five stages each: understand, worked example, visualization, guided decisions, independent checkpoint. There are eight original two-step guided problems and 42 original independent questions, six per skill. Skill rounds select four questions; mixed rounds select one per skill for seven total. Four questions per skill are also used as lesson checkpoints; checkpoints are not a separately reserved unseen pool. The two table/linear-pattern lessons share a skill and checkpoint pool.
+Nine lessons with five stages each: understand, worked example, visualization, guided decisions, independent checkpoint. There are nine original two-step guided problems and 54 original independent questions across seven skills. Skill rounds select four questions; mixed rounds select one per skill for seven total. New recognition/domain lessons have relevant checkpoint pools; checkpoints are also available in practice, not reserved unseen assessments.
 
 Skills: coordinates/tables, linear graphs, domain/range/intercepts, slope on graphs, slope from points/tables, slope-intercept form, and real-world models. Progressive hints, targeted feedback, simpler explanations, actual skill progress, and local persistence remain. The SVG coordinate plane supports continuous/horizontal/vertical lines, sample points, discrete contextual plots, and accessible captions; the slope/intercept explorer updates its graph through labeled keyboard-accessible controls.
 
@@ -51,4 +53,4 @@ Chapter 3 uses `algebra-lab.chapter3.progress.v1` and `algebra-lab.chapter3.prac
 
 ## Review limits
 
-The missing files prevent confirmation that every original Chapter 3 subsection has been recovered. Available notes are covered with original teaching and practice, rather than worksheet reproduction. A final comparison against the missing notes and a student trial remain useful before calling the curriculum fully aligned to the class.
+The missing filename pages 5–6 prevent confirmation that every original Chapter 3 subsection has been recovered. All supplied files, including pages 1–2, are covered with original teaching and practice rather than worksheet reproduction. A comparison against the remaining missing notes and a student trial remain useful before calling the curriculum fully aligned to the class.

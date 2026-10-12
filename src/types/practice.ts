@@ -6,8 +6,15 @@ export interface Point {
 export type GraphModel =
   | { kind: "line"; slope: number; intercept: number }
   | { kind: "vertical"; x: number }
+  | {
+      kind: "curve";
+      shape: "quadratic" | "absolute-value";
+      scale: number;
+      offset: number;
+    }
   | { kind: "points"; points: Point[] };
 export interface GraphSpec {
+  domain?: { min: number; max: number };
   slopeTriangle?: boolean;
   model: GraphModel;
   description: string;

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useProgress } from "../context/ProgressContext";
 import { lessons } from "../data/chapters/chapter3";
+import { independentProblems } from "../data/chapters/chapter3Practice";
 import { skillIds } from "../types/progress";
 import { overallMastery, mastery, skillLabels } from "../utils/mastery";
 import { SkillCard } from "../components/progress/SkillCard";
@@ -104,8 +105,8 @@ export function Dashboard() {
           <span className="eyebrow">BUILD YOUR EVIDENCE</span>
           <h2>Same idea. Fresh examples.</h2>
           <p>
-            42 original independent questions across seven skills. Hints are
-            always available.
+            {independentProblems.length} original independent questions across
+            seven skills. Hints are always available.
           </p>
         </div>
         <Link className="primary" to="/practice">

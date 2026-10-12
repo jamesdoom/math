@@ -802,5 +802,315 @@ export const independentProblems: PracticeProblem[] = [
     ],
   ),
 ];
+export const classificationProblemIds = [
+  "classify-table-linear",
+  "classify-table-nonlinear",
+  "classify-equation-linear",
+  "classify-graph-u",
+  "classify-graph-v",
+  "classify-equation-square",
+];
+export const domainProblemIds = [
+  "domain-tickets",
+  "domain-continuous",
+  "graph-continuous",
+  "discrete-fractional",
+  "domain-values",
+  "point-satisfies-rule",
+];
+export const continuousLengthGraph: GraphSpec = {
+  model: { kind: "line", slope: 3, intercept: 0 },
+  domain: { min: 0, max: 2 },
+  bounds: { xMin: -1, xMax: 3, yMin: -1, yMax: 9 },
+  xLabel: "x · metres",
+  yLabel: "y · dollars",
+  description:
+    "Every ribbon length from 0 to 2 metres is allowed; connect the points along y = 3x, including the endpoints.",
+};
+export const discreteTicketGraph: GraphSpec = {
+  model: {
+    kind: "points",
+    points: Array.from({ length: 4 }, (_, x) => ({ x, y: 4 * x })),
+  },
+  bounds: { xMin: 0, xMax: 4, yMin: 0, yMax: 16 },
+  xLabel: "x · tickets",
+  yLabel: "y · dollars",
+  description:
+    "Only 0, 1, 2, or 3 whole tickets are allowed. Plot separate points on y = 4x; do not connect fractional counts.",
+};
+independentProblems.push(
+  q(
+    "classify-table-linear",
+    "linear-graphs",
+    "Input steps are not all the same",
+    "Is this table consistent with a linear function?",
+    "Yes: both rates are 2",
+    "From x = 0 to 1, the rate is 2/1. From x = 1 to 3, it is 4/2. Both equal 2.",
+    [
+      [
+        "No: the output differences are 2 and 4",
+        "Input differences are also different. Compare output change divided by input change.",
+      ],
+      [
+        "Yes: because outputs increase",
+        "Increasing alone does not imply linearity. Check the rate of change.",
+      ],
+    ],
+    [
+      "Calculate both input differences.",
+      "Compare Δy / Δx between consecutive rows.",
+    ],
+    undefined,
+    [
+      { x: 0, y: 1 },
+      { x: 1, y: 3 },
+      { x: 3, y: 7 },
+    ],
+  ),
+  q(
+    "classify-table-nonlinear",
+    "linear-graphs",
+    "Equal input steps",
+    "Does this table represent a linear pattern?",
+    "No: the rates are 1 and 3",
+    "For equal input increases of 1, output changes are 1 and 3. The rate is not constant.",
+    [
+      [
+        "Yes: the outputs increase",
+        "Increasing output does not establish a constant rate.",
+      ],
+      [
+        "Yes: every row is a point",
+        "Every table gives points, but those points need not lie on a straight line.",
+      ],
+    ],
+    [
+      "Compare consecutive outputs for these equal input steps.",
+      "The first change is 1; the next is 3.",
+    ],
+    undefined,
+    [
+      { x: 0, y: 0 },
+      { x: 1, y: 1 },
+      { x: 2, y: 4 },
+    ],
+  ),
+  q(
+    "classify-equation-linear",
+    "linear-graphs",
+    "y = 5 − 2x",
+    "Is this a linear function?",
+    "Yes: y = −2x + 5",
+    "It can be written y = mx + b with constants m = −2 and b = 5.",
+    [
+      [
+        "No: the constant is written first",
+        "Reordering terms does not change the relationship.",
+      ],
+      [
+        "No: the coefficient is negative",
+        "Negative slopes still describe straight lines.",
+      ],
+    ],
+    ["Reorder with the x-term first.", "Compare with y = mx + b."],
+  ),
+  q(
+    "classify-graph-u",
+    "linear-graphs",
+    "Inspect the entire graph",
+    "Is this function linear or nonlinear?",
+    "Nonlinear",
+    "The graph is curved rather than a nonvertical straight line. Its rate changes.",
+    [
+      [
+        "Linear: it is one connected graph",
+        "Being connected does not make a graph a straight line.",
+      ],
+      [
+        "Not a function: it curves",
+        "A curve can still have one output per input.",
+      ],
+    ],
+    [
+      "A linear function has a nonvertical straight-line graph.",
+      "Check whether the direction changes across the whole graph.",
+    ],
+    {
+      model: { kind: "curve", shape: "quadratic", scale: 1, offset: -2 },
+      description: "A smooth U-shaped graph with one output per input.",
+    },
+  ),
+  q(
+    "classify-graph-v",
+    "linear-graphs",
+    "Inspect both sides of this graph",
+    "Is this function linear?",
+    "No: it changes direction",
+    "The two straight pieces form a corner. The whole function does not have one constant rate.",
+    [
+      [
+        "Yes: each side is straight",
+        "The whole graph must lie on one straight line, not two different directions.",
+      ],
+      [
+        "No: it has negative inputs",
+        "Negative inputs do not prevent a function from being linear.",
+      ],
+    ],
+    [
+      "Consider the entire graph.",
+      "Compare its direction before and after the corner.",
+    ],
+    {
+      model: { kind: "curve", shape: "absolute-value", scale: 1, offset: -2 },
+      description: "A V-shaped graph with a corner at (0, −2).",
+    },
+  ),
+  q(
+    "classify-equation-square",
+    "linear-graphs",
+    "y = x²",
+    "Is this function linear?",
+    "No: its rate changes",
+    "At x = 0, 1, 2 the outputs are 0, 1, 4. Equal input steps do not give equal output changes.",
+    [
+      [
+        "Yes: there is only one variable on the right",
+        "An x² term does not fit the form mx + b.",
+      ],
+      [
+        "Yes: every x has one output",
+        "That establishes a function, not necessarily a linear function.",
+      ],
+    ],
+    [
+      "Compare with y = mx + b.",
+      "Test inputs 0, 1, and 2; compare the output changes.",
+    ],
+  ),
+  q(
+    "domain-tickets",
+    "linear-models",
+    "Tickets cost $4 each; at most 3 tickets can be purchased.",
+    "What is the feasible input domain?",
+    "{0, 1, 2, 3}",
+    "The input counts whole tickets. Zero is allowed; fractions and counts above 3 are not.",
+    [
+      [
+        "Every real x from 0 to 3",
+        "That would include fractional ticket counts.",
+      ],
+      [
+        "{0, 4, 8, 12}",
+        "Those are costs in the range, not counts in the domain.",
+      ],
+    ],
+    [
+      "Domain means allowed inputs.",
+      "Keep nonnegative whole ticket counts through 3.",
+    ],
+  ),
+  q(
+    "domain-continuous",
+    "linear-models",
+    "Ribbon may be cut to any length from 0 to 2 metres, endpoints included.",
+    "Which statement describes the domain?",
+    "Continuous: every real x from 0 to 2",
+    "Lengths such as 0.2 and 1.75 metres are allowed, along with every value in between.",
+    [
+      [
+        "Discrete: only {0, 1, 2}",
+        "The situation allows any length, not just whole metres.",
+      ],
+      [
+        "Continuous: all real numbers",
+        "Negative lengths and lengths above 2 are excluded.",
+      ],
+    ],
+    [
+      "Ask whether values between whole numbers are meaningful.",
+      "Respect both stated boundaries.",
+    ],
+  ),
+  q(
+    "graph-continuous",
+    "linear-models",
+    "Ribbon costs $3 per metre; any length from 0 to 2 metres is available.",
+    "Which graph representation fits?",
+    "A connected segment from (0, 0) to (2, 6)",
+    "Every length in the interval is allowed. Use the corresponding continuous segment rather than dots or an unlimited line.",
+    [
+      [
+        "Only dots at whole metre values",
+        "Lengths such as 0.5 metres are also allowed.",
+      ],
+      [
+        "An unlimited line through the origin",
+        "The stated domain stops at 2 metres.",
+      ],
+    ],
+    [
+      "First determine whether inputs are continuous.",
+      "Then apply the lower and upper domain limits.",
+    ],
+  ),
+  q(
+    "discrete-fractional",
+    "linear-models",
+    "A shop offers only 0.5 m, 1 m, or 1.5 m pre-cut pieces.",
+    "Is the domain discrete or continuous?",
+    "Discrete: three separate allowed lengths",
+    "A discrete domain can contain fractions. Only the listed values are allowed; 0.75 m is not.",
+    [
+      [
+        "Continuous: because 0.5 is a decimal",
+        "Decimals do not automatically make a domain continuous. Are all intervening lengths allowed?",
+      ],
+      [
+        "Discrete: decimals must be removed",
+        "Keep every allowed input, including 0.5 and 1.5.",
+      ],
+    ],
+    [
+      "Check whether every length between the boundaries is available.",
+      "There are only three selected lengths.",
+    ],
+  ),
+  q(
+    "domain-values",
+    "linear-models",
+    "Any real length x from 0 to 2 metres is allowed.",
+    "Which proposed input is outside the domain?",
+    "2.5 metres",
+    "The upper limit is 2, so 2.5 is excluded. Fractional values inside the interval are allowed.",
+    [
+      ["0.5 metres", "0.5 lies inside the allowed interval."],
+      ["0 metres", "The lower endpoint is explicitly included."],
+    ],
+    [
+      "Check the stated endpoints.",
+      "A continuous domain includes all values between its boundaries, not beyond them.",
+    ],
+  ),
+  q(
+    "point-satisfies-rule",
+    "linear-graphs",
+    "y = 3x + 1",
+    "Which ordered pair makes the equation true?",
+    "(2, 7)",
+    "Substitute x = 2: y = 3(2) + 1 = 7. A solution point makes the equation true.",
+    [
+      ["(2, 6)", "Include the constant +1 after multiplying."],
+      [
+        "(7, 2)",
+        "Use the first coordinate as input. At x = 7, the output is 22.",
+      ],
+    ],
+    [
+      "Substitute the x-coordinate from each pair.",
+      "Compare the calculated output with its y-coordinate.",
+    ],
+  ),
+);
 export const independentProblemMap: Record<string, PracticeProblem> =
   Object.fromEntries(independentProblems.map((p) => [p.id, p]));

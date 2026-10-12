@@ -20,6 +20,10 @@ npm run build
 
 Local URL: http://127.0.0.1:5173. On this machine the npm wrapper may be broken; PowerShell can run `& 'C:/Program Files/nodejs/node.exe' 'C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js' run dev` instead. Static hosting requires an SPA fallback to index.html.
 
+## Vercel deployment
+
+Import `jamesdoom/math`, production branch `main`. Select the Vite preset, root `./`, build command `npm run build`, output `dist`, and install command `npm ci`. No application environment variables are required. `vercel.json` supplies the SPA fallback so direct chapter/lesson/practice links and refreshes load the React router. After deployment, verify a direct lesson URL and its refresh, plus static assets. Progress on localhost does not automatically transfer to the deployed origin; use a stable production URL for student progress.
+
 ## Architecture
 
 - `src/data/chapters/chapter3.ts`: chapter, nine lessons, guided problems, source labels, simpler explanations.

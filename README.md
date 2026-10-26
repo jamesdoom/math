@@ -1,14 +1,21 @@
-# Algebra Lab — Chapter 3
+# Algebra Lab — Chapter 4, page 1
 
-React, strict TypeScript, Vite, React Router, CSS, and localStorage. The current app contains **Chapter 3 — Linear Functions only**.
+A student-friendly React/TypeScript/Vite app for **4.1 Writing Equations in Slope-Intercept Form**. Active exercises are limited to the attached `Ch 4. Page 1 notes.pdf` from the user's Cengage Big Ideas Algebra 1 class material. This is an original learning aid, not an official publisher product or a reproduction of the worksheet.
 
-## Content
+## Learning path
 
-Nine five-stage lessons cover inputs and coordinates, tables and graphs, linear/nonlinear identification, discrete/continuous domains, domain/range/intercepts, slope on graphs, slope from points/tables, slope-intercept form, and real-world models. Each includes explanations, a worked example, a graph, a two-step guided problem, four checkpoint questions, progressive help, and targeted feedback. The bank contains 54 original independent questions across seven skills. Skill rounds use four items; mixed rounds use one per skill.
+Five short lessons teach signed m and b, equations from given information, equations from graphs, equations from tables containing x = 0, and horizontal lines. Each has four stages:
 
-The [source map](docs/chapter-3-source-map.md) documents the reviewed PDFs, the filename/handwritten-number mismatch, and mathematical clarifications. Pages 1–2 are integrated into source-backed lessons and practice. PDF filename pages 5–6 remain missing; the app makes no claim to reproduce their exact contents. Original prerequisite explanations are aligned to the available notes.
+1. One idea first.
+2. A worked example revealed one small step at a time, with back/next controls.
+3. A guided problem split into two to five decisions.
+4. Three independent checks, with progressive assistance still available.
 
-## Run and check
+There are 30 original independent questions (six per skill). Focused rounds use three items; mixed review uses one per skill for five. Practice offers a guided-learning link before the independent checks. Fractions, decimal intercepts, negative signs, and zero slope reflect the supplied page. Later Chapter 4 topics are excluded.
+
+See the [Chapter 4 source and scope map](docs/chapter-4-source-map.md) for provenance, examples, intentional boundaries, and the teaching sequence.
+
+## Run and verify
 
 ```sh
 npm install
@@ -18,40 +25,31 @@ npm test
 npm run build
 ```
 
-Local URL: http://127.0.0.1:5173. On this machine the npm wrapper may be broken; PowerShell can run `& 'C:/Program Files/nodejs/node.exe' 'C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js' run dev` instead. Static hosting requires an SPA fallback to index.html.
+On this Windows host the npm wrapper may be broken; use `& 'C:/Program Files/nodejs/node.exe' 'C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js' run dev` instead. Local URL: http://127.0.0.1:5173.
 
-## Vercel deployment
+The repository uses React Router, plain CSS, React context/state, and localStorage. No backend, authentication, AI, or large UI/chart framework is required. For Vercel: import `jamesdoom/math`, branch `main`, Vite preset, root `./`, install `npm ci`, build `npm run build`, output `dist`, no environment variables. The existing `vercel.json` enables direct lesson links and refreshes.
 
-Import `jamesdoom/math`, production branch `main`. Select the Vite preset, root `./`, build command `npm run build`, output `dist`, and install command `npm ci`. No application environment variables are required. `vercel.json` supplies the SPA fallback so direct chapter/lesson/practice links and refreshes load the React router. After deployment, verify a direct lesson URL and its refresh, plus static assets. Progress on localhost does not automatically transfer to the deployed origin; use a stable production URL for student progress.
+## Structure
 
-## Architecture
+- `src/data/chapters/chapter4.ts`: source-linked lessons, tiny worked-example moves, guided steps, progressive explanations.
+- `src/data/chapters/chapter4Practice.ts`: original questions, authored numeric cases, graph/table data, misconception feedback.
+- `src/components/learning/WorkedExample.tsx`: one move at a time; completed graph appears after the final move.
+- `src/components/practice/PracticePlayer.tsx`: choices, targeted feedback, Hint 1 → Hint 2 → walkthrough → full solution.
+- `src/components/graph/`: accessible native SVG coordinate plane.
+- `src/pages/`: dashboard, Chapter 4 navigation, lesson player, short practice rounds.
+- `src/utils/`: math, storage validation, pure attempt recording, replaceable mastery policy, and varied round selection.
+- `tests/chapter4.test.ts`: page scope, references, data quality, signed/fractional/decimal equations, tables, graphs, round selection, and evidence integrity.
 
-- `src/data/chapters/chapter3.ts`: chapter, nine lessons, guided problems, source labels, simpler explanations.
-- `src/data/chapters/chapter3Practice.ts`: original practice bank and targeted misconceptions.
-- `src/types/`: typed curriculum, authored question steps, graph models, and student progress.
-- `src/components/graph/CoordinatePlane.tsx`: SVG grid, clipped infinite lines, bounded continuous segments, horizontal/vertical lines, recognition curves, discrete plots, and textual equivalents.
-- `src/components/learning/`: tables, interactive slope/intercept controls, progressively simpler support.
-- `src/components/practice/PracticePlayer.tsx`: stepwise choices and help, with persistent first-answer evidence.
-- `src/pages/`: dashboard, data-driven chapter navigation, lesson player, practice rounds.
-- `src/utils/`: linear math, progress, storage validation, replaceable mastery calculation, round selection.
-- `tests/chapter3.test.ts`: source references, numeric math, graph bounds, contextual models, bank quality, rounds, and progress integrity.
+## Progress and limits
 
-Add a lesson by defining its data and problems and registering it in the lesson/topic arrays. Chapter navigation resolves these arrays rather than one hard-coded introductory card. Authored transformations explain the reasoning without an arbitrary symbolic solver.
+Chapter 4 uses `algebra-lab.chapter4.progress.v1` and `algebra-lab.chapter4.practice-round.v1`. Older chapter records remain untouched, rather than being reset or counted toward new skills. Earlier source/curriculum files are recoverable in Git history. Existing Chapter 4 IDs should remain stable during future updates.
 
-## Progress
+Only first unassisted answers update independent evidence; hints and feedback-assisted retries remain learning. Saved evidence prevents refreshes from creating new first answers. Correct steps earn 10 XP once per problem/step. Mastery is independent correct / independent attempts, with the existing three-correct/80% mastered threshold. It is a learning indicator, not a validated adaptive assessment. Checkpoints and practice reuse items, rather than forming reserved unseen pools.
 
-Chapter 3 starts at zero using `algebra-lab.chapter3.progress.v1` and `algebra-lab.chapter3.practice-round.v1`. Existing Chapter 2 storage is not loaded or deleted. Correct steps award 10 XP once per problem/step. Only first unassisted answers supply independent evidence; saved mistakes or assistance cannot become a new independent success after refreshing. Lesson checkpoints use stable evidence IDs, while new practice rounds provide further opportunities. Using simpler help during a checkpoint marks its current problem assisted.
+Resume restores the lesson stage or round item; unfinished interaction screens restart, but first-answer/assistance evidence remains saved. Progress is local to each browser/origin and does not automatically move between localhost and deployment or between devices. The app uses authored choices, not arbitrary equation parsing or free-form graph drawing. Additional chapter material awaits further notes or user authorization.
 
-Mastery is rounded independent correct / independent attempts. States are not started, learning, practicing, or mastered (at least three independent correct and 80% accuracy). This remains a simple policy, not a validated assessment; checkpoint items also appear in practice rather than forming a reserved unseen pool.
+After verified updates, commit and push to `origin/main` as authorized in `AGENTS.md`. Private PDFs, temporary screenshots/browser tooling, dependencies, and built assets are excluded from commits.
 
 ## Verification
 
-Strict TypeScript, the production build, and 13 domain/content/progress tests pass. The isolated browser workflow exercises all nine lesson flows and all 54 independent items across desktop and 390px mobile layouts, including recognition curves, continuous domain limits, discrete graph points, source labels, slope/intercept controls, help, completion, refresh-safe evidence, round resume, and preservation of legacy storage. Screenshots and the browser script are in ignored `.verification/`.
-
-## Repository workflow
-
-The user has authorized committing and pushing verified updates to `origin/main` after every project update. This standing instruction is recorded in `AGENTS.md`.
-
-## Limits
-
-Source alignment for missing files is unverified. The app uses authored choices, not free-form equation entry or direct point-placement assessment. It has no backend, account, AI, or cloud sync. Progress is local to a browser origin. Resume restores the lesson stage or practice-round item; the unfinished interaction restarts, but its evidence remains recorded. Fonts use Google Fonts with local fallbacks. The former Chapter 2 curriculum and docs have been replaced; obsolete lesson/chapter URLs show a not-found state.
+TypeScript, the production build, and ten domain/content/progress tests pass. An isolated browser session exercised all five complete lessons and all 30 independent questions, including worked-example next/back and keyboard controls, graph/table guidance, wrong-answer feedback, progressive help, completion, short/mixed rounds, refresh persistence, and earlier Chapter 3 storage preservation. Desktop and 390px mobile layouts had no horizontal overflow; no runtime/console errors were detected. Temporary browser tooling and screenshots live under ignored `.verification/`.

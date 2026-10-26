@@ -34,8 +34,9 @@ export function formatNumber(value: number): string {
   return String(Number(value.toFixed(3))).replace("-", "−");
 }
 export function equation(m: number, b: number) {
-  if (m === 0) return `y = ${formatNumber(b)}`;
-  return `y = ${m === 1 ? "" : m === -1 ? "−" : formatNumber(m)}x${b === 0 ? "" : b > 0 ? " + " + formatNumber(b) : " − " + formatNumber(-b)}`;
+  const decimal = (value: number) => String(value).replace("-", "−");
+  if (m === 0) return `y = ${decimal(b)}`;
+  return `y = ${m === 1 ? "" : m === -1 ? "−" : Number.isInteger(m) ? formatNumber(m) : "(" + formatNumber(m) + ")"}x${b === 0 ? "" : b > 0 ? " + " + decimal(b) : " − " + decimal(-b)}`;
 }
 export function evaluateChoice(step: ProblemStep, choiceId: string) {
   const choice = step.choices.find((c) => c.id === choiceId);

@@ -5,13 +5,11 @@ import {
   type MasteryState,
 } from "../types/progress";
 export const skillLabels: Record<(typeof skillIds)[number], string> = {
-  "coordinates-tables": "Inputs and coordinates",
-  "linear-graphs": "Tables and graphs",
-  "domain-range-intercepts": "Domain, range, intercepts",
-  "slope-graphs": "Slope on graphs",
-  "slope-points-tables": "Slope from points and tables",
-  "slope-intercept-form": "Slope-intercept form",
-  "linear-models": "Real-world models",
+  "identify-m-and-b": "Identify m and b",
+  "equation-from-information": "Write from given m and b",
+  "equation-from-graph": "Write from a graph",
+  "equation-from-table": "Write from a table",
+  "horizontal-equations": "Horizontal line equations",
 };
 export function mastery(p: SkillProgress) {
   return p.independentAttempts

@@ -975,6 +975,25 @@ select {
   gap: 15px;
   align-items: start;
 }
+.small-example {
+  margin-top: 22px;
+}
+.example-move {
+  padding: 22px;
+  border: 1px solid var(--border);
+  background: #102018;
+  border-radius: 10px;
+  font-size: 18px;
+  line-height: 1.7;
+  min-height: 110px;
+  overflow-wrap: anywhere;
+}
+.practice-top {
+  gap: 12px;
+}
+.practice-heading .callout {
+  margin-top: 20px;
+}
 .graph-comparison .coordinate-plane {
   min-width: 0;
 }

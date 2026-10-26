@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useProgress } from "../context/ProgressContext";
-import { lessons } from "../data/chapters/chapter3";
-import { independentProblems } from "../data/chapters/chapter3Practice";
+import { lessons } from "../data/chapters/chapter4";
+import { independentProblems } from "../data/chapters/chapter4Practice";
 import { skillIds } from "../types/progress";
 import { overallMastery, mastery, skillLabels } from "../utils/mastery";
 import { SkillCard } from "../components/progress/SkillCard";
@@ -25,11 +25,11 @@ export function Dashboard() {
   return (
     <>
       <div className="page-heading">
-        <span className="eyebrow">YOUR LEARNING SPACE · CHAPTER 3</span>
+        <span className="eyebrow">YOUR LEARNING SPACE · CHAPTER 4</span>
         <h1>
-          See the pattern.
+          Build one piece.
           <br />
-          <span>Understand the line.</span>
+          <span>Then the equation.</span>
         </h1>
         <p>
           Tables, graphs, and equations tell the same story.
@@ -40,11 +40,11 @@ export function Dashboard() {
       <div className="dashboard-grid">
         <section className="hero-card">
           <div className="card-top">
-            <span className="tag">CHAPTER 03</span>
+            <span className="tag">CHAPTER 04</span>
             <span className="muted">{lessons.length} focused lessons</span>
           </div>
-          <h2>Linear Functions</h2>
-          <p>From one input to a whole picture.</p>
+          <h2>Writing Linear Equations</h2>
+          <p>Section 4.1 · One small piece at a time.</p>
           <CoordinatePlane
             spec={{
               model: { kind: "line", slope: 1, intercept: 2 },
@@ -64,7 +64,7 @@ export function Dashboard() {
             <Link className="primary" to={"/lesson/" + current.id}>
               Continue learning →
             </Link>
-            <Link className="text-link" to="/chapter/3">
+            <Link className="text-link" to="/chapter/4">
               Explore chapter
             </Link>
           </div>
@@ -76,7 +76,7 @@ export function Dashboard() {
           <p>{current.description}</p>
           <div className="lesson-meta">
             <span>At your own pace</span>
-            <span>5 lesson stages</span>
+            <span>4 short stages</span>
           </div>
           <div className="status-pill">
             {current.supplemental
@@ -92,7 +92,7 @@ export function Dashboard() {
       <div className="section-title">
         <div>
           <span className="eyebrow">PROGRESS WITH A PURPOSE</span>
-          <h2>Your Chapter 3 skills</h2>
+          <h2>Your Chapter 4 skills</h2>
         </div>
       </div>
       <section className="skills-panel">
@@ -106,7 +106,7 @@ export function Dashboard() {
           <h2>Same idea. Fresh examples.</h2>
           <p>
             {independentProblems.length} original independent questions across
-            seven skills. Hints are always available.
+            five skills. Hints are always available.
           </p>
         </div>
         <Link className="primary" to="/practice">
@@ -132,7 +132,7 @@ export function Dashboard() {
         </div>
       </div>
       <p className="fine-print">
-        Chapter 3 starts with fresh progress. Scores reflect your actual
+        Chapter 4 starts with fresh progress. Scores reflect your actual
         independent answers, not demo data.
       </p>
     </>

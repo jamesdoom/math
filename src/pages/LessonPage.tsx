@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { lessons, problems } from "../data/chapters/chapter3";
+import { lessons, problems } from "../data/chapters/chapter4";
 import type { Lesson } from "../types/curriculum";
 import { useProgress } from "../context/ProgressContext";
 import { GraphExplorer } from "../components/learning/GraphExplorer";
 import { UnderstandingHelp } from "../components/learning/UnderstandingHelp";
 import { ValueTable } from "../components/learning/ValueTable";
+import { WorkedExample } from "../components/learning/WorkedExample";
 import { PracticePlayer } from "../components/practice/PracticePlayer";
 import { CoordinatePlane } from "../components/graph/CoordinatePlane";
 export function LessonPage() {
@@ -16,7 +17,7 @@ export function LessonPage() {
   ) : (
     <>
       <h1>Lesson not found</h1>
-      <Link to="/chapter/3">Explore Chapter 3</Link>
+      <Link to="/chapter/4">Explore Chapter 4</Link>
     </>
   );
 }
@@ -47,8 +48,8 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
   return (
     <>
       <div className="lesson-heading">
-        <Link className="text-link" to="/chapter/3">
-          ← Chapter 3
+        <Link className="text-link" to="/chapter/4">
+          ← Chapter 4
         </Link>
         <span className="muted">
           {Math.min(position + 1, lesson.steps.length)} / {lesson.steps.length}{" "}
@@ -94,28 +95,43 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
               </span>
               <h2>{current.title}</h2>
               <p className="lesson-intro">{current.body}</p>
-              {current.type === "example" && (
-                <>
-                  {current.comparisonGraphs && (
-                    <div className="graph-comparison">
-                      {current.comparisonGraphs.map((graph) => (
-                        <CoordinatePlane key={graph.description} spec={graph} />
-                      ))}
-                    </div>
-                  )}
-                  {current.lines && (
-                    <ol className="worked-example">
-                      {current.lines.map((line) => (
-                        <li key={line}>{line}</li>
-                      ))}
-                    </ol>
-                  )}
-                  {current.table && <ValueTable points={current.table} />}
-                </>
+              {current.type === "example" &&
+              current.revealOneAtATime &&
+              current.lines ? (
+                <WorkedExample
+                  lines={current.lines}
+                  graph={current.graph}
+                  table={current.table}
+                />
+              ) : (
+                current.type === "example" && (
+                  <>
+                    {current.comparisonGraphs && (
+                      <div className="graph-comparison">
+                        {current.comparisonGraphs.map((graph) => (
+                          <CoordinatePlane
+                            key={graph.description}
+                            spec={graph}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {current.lines && (
+                      <ol className="worked-example">
+                        {current.lines.map((line) => (
+                          <li key={line}>{line}</li>
+                        ))}
+                      </ol>
+                    )}
+                    {current.table && <ValueTable points={current.table} />}
+                  </>
+                )
               )}
               {current.type === "visual" && current.interactive ? (
                 <GraphExplorer />
-              ) : "graph" in current && current.graph ? (
+              ) : "graph" in current &&
+                current.graph &&
+                !(current.type === "example" && current.revealOneAtATime) ? (
                 <CoordinatePlane spec={current.graph} />
               ) : null}
               {practice && (

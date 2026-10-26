@@ -7,6 +7,7 @@ export type LessonStep =
       title: string;
       body: string;
       lines?: string[];
+      revealOneAtATime?: boolean;
       graph?: GraphSpec;
       comparisonGraphs?: GraphSpec[];
       table?: Point[];

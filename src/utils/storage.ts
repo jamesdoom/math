@@ -1,5 +1,5 @@
 import { skillIds, type StudentProgress } from "../types/progress";
-export const STORAGE_KEY = "algebra-lab.chapter3.progress.v1";
+export const STORAGE_KEY = "algebra-lab.chapter4.progress.v1";
 export function emptyProgress(): StudentProgress {
   return {
     version: 1,

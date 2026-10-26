@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom";
-import { chapter3 } from "../data/chapters/chapter3";
+import { chapter4 } from "../data/chapters/chapter4";
 import { useProgress } from "../context/ProgressContext";
 export function ChapterPage() {
   const { progress } = useProgress();
   return (
     <>
       <div className="page-heading">
-        <span className="eyebrow">CHAPTER 03 · YOUR ROADMAP</span>
-        <h1>Linear Functions</h1>
-        <p>{chapter3.description}</p>
+        <span className="eyebrow">CHAPTER 04 · YOUR ROADMAP</span>
+        <h1>Writing Linear Equations</h1>
+        <p>{chapter4.description}</p>
       </div>
       <aside className="callout">
-        Pages 1–2 are now integrated: linear versus nonlinear functions and
-        discrete versus continuous domains. The PDF file numbered pages 5–6
-        remains missing; its exact contents are unverified.
+        Start small: find m, find b, then build the equation. This learning path
+        covers only section 4.1 on your supplied page 1. Later Chapter 4 topics
+        are not included yet.
       </aside>
       <div className="topic-grid">
-        {chapter3.topics.map((topic, index) => (
+        {chapter4.topics.map((topic, index) => (
           <section className="topic-card" key={topic.id}>
             <div className="card-top">
               <span className="topic-number">0{index + 1}</span>

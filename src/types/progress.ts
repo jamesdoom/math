@@ -1,11 +1,9 @@
 export const skillIds = [
-  "coordinates-tables",
-  "linear-graphs",
-  "domain-range-intercepts",
-  "slope-graphs",
-  "slope-points-tables",
-  "slope-intercept-form",
-  "linear-models",
+  "identify-m-and-b",
+  "equation-from-information",
+  "equation-from-graph",
+  "equation-from-table",
+  "horizontal-equations",
 ] as const;
 export type SkillId = (typeof skillIds)[number];
 export type MasteryState =

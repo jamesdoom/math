@@ -17,7 +17,7 @@ function Shell() {
           <NavLink to="/" end>
             My learning
           </NavLink>
-          <NavLink to="/chapter/3">Chapter 3</NavLink>
+          <NavLink to="/chapter/4">Chapter 4</NavLink>
           <NavLink to="/practice">Practice</NavLink>
         </nav>
         <span className="xp">✧ {progress.xp} XP</span>
@@ -31,7 +31,7 @@ function Shell() {
         )}
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/chapter/3" element={<ChapterPage />} />
+          <Route path="/chapter/4" element={<ChapterPage />} />
           <Route path="/lesson/:lessonId" element={<LessonPage />} />
           <Route path="/practice" element={<PracticePage />} />
           <Route
@@ -46,7 +46,7 @@ function Shell() {
         </Routes>
       </main>
       <footer>
-        <span>Algebra Lab · Chapter 3</span>
+        <span>Algebra Lab · Chapter 4</span>
         <span>Understand the why. Build the confidence.</span>
         <span>Saved on this browser</span>
       </footer>

@@ -3,7 +3,7 @@ import {
   independentProblemMap,
   practiceSkills,
   type PracticeSkill,
-} from "../data/chapters/chapter3Practice";
+} from "../data/chapters/chapter4Practice";
 import type { StudentProgress } from "../types/progress";
 export type PracticeSelection = PracticeSkill | "mixed";
 export interface PracticeRound {
@@ -13,7 +13,7 @@ export interface PracticeRound {
   problemIds: string[];
   index: number;
 }
-export const ROUND_STORAGE_KEY = "algebra-lab.chapter3.practice-round.v1";
+export const ROUND_STORAGE_KEY = "algebra-lab.chapter4.practice-round.v1";
 function shuffle<T>(values: T[], random: () => number): T[] {
   const result = [...values];
   for (let i = result.length - 1; i > 0; i--) {
@@ -40,7 +40,7 @@ export function createRound(
         random,
       )
         .sort((a, b) => counts(a.id) - counts(b.id))
-        .slice(0, selection === "mixed" ? 1 : 4),
+        .slice(0, selection === "mixed" ? 1 : 3),
   );
   return {
     version: 1,
@@ -66,7 +66,7 @@ export function parseRound(raw: string | null): PracticeRound | null {
       ) ||
       !Array.isArray(p.problemIds) ||
       p.problemIds.length !==
-        (p.selection === "mixed" ? practiceSkills.length : 4) ||
+        (p.selection === "mixed" ? practiceSkills.length : 3) ||
       !p.problemIds.every(
         (id) =>
           typeof id === "string" && Object.hasOwn(independentProblemMap, id),

@@ -5,7 +5,7 @@ import { ChapterPage } from "./pages/ChapterPage";
 import { LessonPage } from "./pages/LessonPage";
 import { PracticePage } from "./pages/PracticePage";
 function Shell() {
-  const { progress, storageError } = useProgress();
+  const { storageError } = useProgress();
   return (
     <>
       <header className="site-header">
@@ -20,7 +20,6 @@ function Shell() {
           <NavLink to="/chapter/4">Chapter 4</NavLink>
           <NavLink to="/practice">Practice</NavLink>
         </nav>
-        <span className="xp">✧ {progress.xp} XP</span>
       </header>
       <main>
         {storageError && (

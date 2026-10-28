@@ -1,140 +1,53 @@
 import { Link } from "react-router-dom";
 import { useProgress } from "../context/ProgressContext";
 import { lessons } from "../data/chapters/chapter4";
-import { independentProblems } from "../data/chapters/chapter4Practice";
 import { skillIds } from "../types/progress";
-import { overallMastery, mastery, skillLabels } from "../utils/mastery";
+import { overallMastery } from "../utils/mastery";
 import { SkillCard } from "../components/progress/SkillCard";
-import { CoordinatePlane } from "../components/graph/CoordinatePlane";
+
 export function Dashboard() {
   const { progress } = useProgress();
-  const current =
-    lessons.find((l) => !progress.completedLessons.includes(l.id)) ??
-    lessons[0];
+  const unfinished = lessons.find((lesson) => !progress.completedLessons.includes(lesson.id));
+  const current = unfinished ?? lessons[0];
+  const resuming = unfinished !== undefined && (progress.lessonPositions[current.id] ?? 0) > 0;
   const score = overallMastery(progress);
-  const strengths = skillIds.filter(
-    (id) =>
-      progress.skills[id].independentAttempts > 0 &&
-      mastery(progress.skills[id]) >= 80,
-  );
-  const needs = skillIds.filter(
-    (id) =>
-      progress.skills[id].independentAttempts > 0 &&
-      mastery(progress.skills[id]) < 80,
-  );
+
   return (
-    <>
-      <div className="page-heading">
-        <span className="eyebrow">YOUR LEARNING SPACE · CHAPTER 4</span>
-        <h1>
-          Build one piece.
-          <br />
-          <span>Then the equation.</span>
-        </h1>
-        <p>
-          Tables, graphs, and equations tell the same story.
-          <br />
-          Let’s connect them, one step at a time.
-        </p>
-      </div>
-      <div className="dashboard-grid">
-        <section className="hero-card">
-          <div className="card-top">
-            <span className="tag">CHAPTER 04</span>
-            <span className="muted">{lessons.length} focused lessons</span>
-          </div>
-          <h2>Writing Linear Equations</h2>
-          <p>Section 4.1 · One small piece at a time.</p>
-          <CoordinatePlane
-            spec={{
-              model: { kind: "line", slope: 1, intercept: 2 },
-              points: [
-                { x: 0, y: 2 },
-                { x: 2, y: 4 },
-              ],
-              description: "Example: y = x + 2. Each step right 1 goes up 1.",
-            }}
-          />
-          <div className="mastery-line">
-            <span>Chapter mastery</span>
-            <strong>{score}%</strong>
-          </div>
-          <progress value={score} max={100} aria-label="Chapter mastery" />
-          <div className="hero-actions">
-            <Link className="primary" to={"/lesson/" + current.id}>
-              Continue learning →
-            </Link>
-            <Link className="text-link" to="/chapter/4">
-              Explore chapter
-            </Link>
-          </div>
-        </section>
-        <aside className="next-card">
-          <span className="eyebrow">YOUR NEXT SMALL STEP</span>
-          <div className="lesson-icon">y = mx + b</div>
+    <div className="start-page">
+      <section className="start-card" aria-labelledby="start-title">
+        <span className="eyebrow">CHAPTER 4 · WRITING LINEAR EQUATIONS</span>
+        <h1 id="start-title">One small step today.</h1>
+        <p className="start-intro">{unfinished ? "Build an equation, one piece at a time." : "Revisit an idea with help, at your own pace."}</p>
+        <div className="start-task">
+          <span className="eyebrow">{unfinished ? "YOUR NEXT LESSON" : "REVIEW WITH HELP"}</span>
           <h2>{current.title}</h2>
-          <p>{current.description}</p>
-          <div className="lesson-meta">
-            <span>At your own pace</span>
-            <span>4 short stages</span>
-          </div>
-          <div className="status-pill">
-            {current.supplemental
-              ? "Supplemental foundation · clearly labeled"
-              : "Original instruction based on your class notes"}
-          </div>
-          <p className="fine-print">
-            {progress.completedLessons.length} of {lessons.length} lessons
-            completed
-          </p>
-        </aside>
-      </div>
-      <div className="section-title">
-        <div>
-          <span className="eyebrow">PROGRESS WITH A PURPOSE</span>
-          <h2>Your Chapter 4 skills</h2>
+          <p>First, one idea. Then, an example. Help is available as you go.</p>
         </div>
-      </div>
-      <section className="skills-panel">
-        {skillIds.map((id) => (
-          <SkillCard key={id} id={id} />
-        ))}
-      </section>
-      <section className="lesson-banner practice-entry">
-        <div>
-          <span className="eyebrow">BUILD YOUR EVIDENCE</span>
-          <h2>Same idea. Fresh examples.</h2>
-          <p>
-            {independentProblems.length} original independent questions across
-            five skills. Hints are always available.
-          </p>
-        </div>
-        <Link className="primary" to="/practice">
-          Choose practice →
+        <Link className="primary" to={"/lesson/" + current.id}>
+          {resuming ? "Continue with help" : "Start with help"}
         </Link>
+        <p className="start-reassurance">No timer. You can pause and come back.</p>
       </section>
-      <div className="insights">
-        <div>
-          <strong>Skill strengths</strong>
-          <p>
-            {strengths.length
-              ? strengths.map((id) => skillLabels[id]).join(", ")
-              : "Your independent answers will show what is clicking."}
-          </p>
+
+      <details className="start-details">
+        <summary>View progress</summary>
+        <div className="start-details-body">
+          <p>{progress.completedLessons.length} of {lessons.length} lessons completed · {progress.xp} XP</p>
+          <div className="mastery-line"><span>Chapter mastery</span><strong>{score}%</strong></div>
+          <progress value={score} max={100} aria-label="Chapter mastery" />
+          <p className="fine-print">Mastery reflects independent answers. Using help is part of learning.</p>
+          <section className="skills-panel" aria-label="Skill progress">
+            {skillIds.map((id) => <SkillCard key={id} id={id} />)}
+          </section>
         </div>
-        <div>
-          <strong>Where to focus</strong>
-          <p>
-            {needs.length
-              ? needs.map((id) => skillLabels[id]).join(", ")
-              : "Begin a lesson to discover your next practice area."}
-          </p>
+      </details>
+      <details className="start-details">
+        <summary>Choose another activity</summary>
+        <div className="start-details-body start-alternatives">
+          <Link className="text-link" to="/chapter/4">Browse Chapter 4 lessons</Link>
+          <Link className="text-link" to="/practice">Choose independent practice</Link>
         </div>
-      </div>
-      <p className="fine-print">
-        Chapter 4 starts with fresh progress. Scores reflect your actual
-        independent answers, not demo data.
-      </p>
-    </>
+      </details>
+    </div>
   );
 }

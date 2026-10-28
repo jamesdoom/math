@@ -4,27 +4,29 @@ import { lessons } from "../data/chapters/chapter4";
 import { skillIds } from "../types/progress";
 import { overallMastery } from "../utils/mastery";
 import { SkillCard } from "../components/progress/SkillCard";
+import { parseSession, SESSION_KEY } from "../utils/shortSession";
 
 export function Dashboard() {
   const { progress } = useProgress();
-  const unfinished = lessons.find((lesson) => !progress.completedLessons.includes(lesson.id));
-  const current = unfinished ?? lessons[0];
-  const resuming = unfinished !== undefined && (progress.lessonPositions[current.id] ?? 0) > 0;
+  let session = null;
+  try { session = parseSession(localStorage.getItem(SESSION_KEY)); } catch { /* Storage warning appears in the session. */ }
+  const finished = session !== null && session.completed === session.length;
+  const resuming = session !== null && session.completed > 0 && !finished;
   const score = overallMastery(progress);
 
   return (
     <div className="start-page">
       <section className="start-card" aria-labelledby="start-title">
         <span className="eyebrow">CHAPTER 4 · WRITING LINEAR EQUATIONS</span>
-        <h1 id="start-title">One small step today.</h1>
-        <p className="start-intro">{unfinished ? "Build an equation, one piece at a time." : "Revisit an idea with help, at your own pace."}</p>
+        <h1 id="start-title">{finished ? "You’re done for today." : "One small step today."}</h1>
+        <p className="start-intro">{finished ? "Your session is complete. You can stop here." : "Build an equation, one piece at a time."}</p>
         <div className="start-task">
-          <span className="eyebrow">{unfinished ? "YOUR NEXT LESSON" : "REVIEW WITH HELP"}</span>
-          <h2>{current.title}</h2>
-          <p>First, one idea. Then, an example. Help is available as you go.</p>
+          <span className="eyebrow">{finished ? "SESSION COMPLETE" : "YOUR SHORT SESSION"}</span>
+          <h2>Build an equation from slope and intercept</h2>
+          <p>{session?.length ?? 3} small moves. Help is available as you go.</p>
         </div>
-        <Link className="primary" to={"/lesson/" + current.id}>
-          {resuming ? "Continue with help" : "Start with help"}
+        <Link className={finished ? "text-link" : "primary"} to="/session">
+          {finished ? "View finished session" : resuming ? "Continue with help" : "Start with help"}
         </Link>
         <p className="start-reassurance">No timer. You can pause and come back.</p>
       </section>

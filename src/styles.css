@@ -1050,3 +1050,4 @@ select {
   .start-page { margin-top: 10px; }
   .start-card .primary { width: 100%; text-align: center; }
 }
+.session-heading { font-size: clamp(28px, 4vw, 38px); letter-spacing: -1px; }

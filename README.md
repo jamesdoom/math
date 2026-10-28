@@ -42,6 +42,10 @@ The repository uses React Router, plain CSS, React context/state, and localStora
 
 ## Progress and limits
 
+The home screen starts a short guided session at `/session`: place the slope, place the intercept, and simplify the equation. Six original given-slope/intercept sets rotate in order. Each move saves synchronously when answered correctly or reviewed through Show solution; feedback stays visible until Next move / Finish session. Refresh resumes after saved moves. A finished session remains finished, including on the home screen, until the student explicitly chooses Do another. There is no timer, streak, deadline, or automatic daily reset. Optional sessions can contain 1–3 moves; their length is fixed at creation. Shorter sessions complete the corresponding prefix of the three moves.
+
+Session state is validated and stored separately at `algebra-lab.chapter4.short-session.v1`. Storage failures show a warning. These guided moves contribute learning attempts and existing once-per-step XP, but never independent mastery or whole-lesson completion. Existing lessons, graph/table instruction, and independent practice remain available through navigation. This first session experiment covers given slope/intercept only.
+
 Chapter 4 uses `algebra-lab.chapter4.progress.v1` and `algebra-lab.chapter4.practice-round.v1`. Older chapter records remain untouched, rather than being reset or counted toward new skills. Earlier source/curriculum files are recoverable in Git history. Existing Chapter 4 IDs should remain stable during future updates.
 
 Only first unassisted answers update independent evidence; hints and feedback-assisted retries remain learning. Saved evidence prevents refreshes from creating new first answers. Correct steps earn 10 XP once per problem/step. Mastery is independent correct / independent attempts, with the existing three-correct/80% mastered threshold. It is a learning indicator, not a validated adaptive assessment. Checkpoints and practice reuse items, rather than forming reserved unseen pools.

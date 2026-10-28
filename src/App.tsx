@@ -4,6 +4,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { ChapterPage } from "./pages/ChapterPage";
 import { LessonPage } from "./pages/LessonPage";
 import { PracticePage } from "./pages/PracticePage";
+import { SessionPage } from "./pages/SessionPage";
 function Shell() {
   const { storageError } = useProgress();
   return (
@@ -33,6 +34,7 @@ function Shell() {
           <Route path="/chapter/4" element={<ChapterPage />} />
           <Route path="/lesson/:lessonId" element={<LessonPage />} />
           <Route path="/practice" element={<PracticePage />} />
+          <Route path="/session" element={<SessionPage />} />
           <Route
             path="*"
             element={

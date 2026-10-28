@@ -8,10 +8,16 @@ export function PracticePlayer({
   problem,
   onComplete,
   assessmentId,
+  onResolved,
+  completionLabel,
+  hideStepCounter = false,
 }: {
   problem: PracticeProblem;
   onComplete: () => void;
   assessmentId?: string;
+  onResolved?: () => void;
+  completionLabel?: string;
+  hideStepCounter?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
@@ -46,6 +52,7 @@ export function PracticePlayer({
     setAttempted(true);
     setFeedback(result.feedback);
     setCorrect(result.correct);
+    if (result.correct) onResolved?.();
   }
   function next() {
     if (index === problem.steps.length - 1) {
@@ -65,9 +72,9 @@ export function PracticePlayer({
         <span className="eyebrow">
           {problem.mode === "guided" ? "GUIDED PRACTICE" : "MASTERY CHECK"}
         </span>
-        <span>
+        {!hideStepCounter && <span>
           Step {index + 1} of {problem.steps.length}
-        </span>
+        </span>}
       </div>
       <p>{problem.prompt}</p>
       <div className="equation">
@@ -115,7 +122,7 @@ export function PracticePlayer({
             className="text-button"
             onClick={() => {
               setHelpLevel((n) => Math.min(n + 1, 4));
-              if (helpLevel === 3) setSolutionShown(true);
+              if (helpLevel === 3) { setSolutionShown(true); onResolved?.(); }
               setAssisted(true);
               if (assessmentId) {
                 const steps = helpLevel === 3 ? problem.steps : [current];
@@ -162,7 +169,7 @@ export function PracticePlayer({
       )}
       {(correct || helpLevel === 4) && (
         <button className="primary" onClick={next}>
-          {index === problem.steps.length - 1 ? "Continue →" : "Next step →"}
+          {index === problem.steps.length - 1 ? (completionLabel ?? "Continue →") : "Next step →"}
         </button>
       )}
     </div>

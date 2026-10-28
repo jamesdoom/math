@@ -77,7 +77,7 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
             markerHeight="4"
             orient="auto-start-reverse"
           >
-            <path d="M0 0 L10 5 L0 10Z" fill="#c8ed9f" />
+            <path d="M0 0 L10 5 L0 10Z" fill="var(--accent)" />
           </marker>
         </defs>
         {xs.map((x) => (
@@ -131,7 +131,7 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
               className="graph-curve"
               points={curve.map((p) => `${px(p.x)},${py(p.y)}`).join(" ")}
               fill="none"
-              stroke="#c8ed9f"
+              stroke="var(--accent)"
               strokeWidth="3"
             />
           )}
@@ -144,7 +144,7 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
                 cx={px(x)}
                 cy={py(model.slope * x + model.intercept)}
                 r="5"
-                fill="#c8ed9f"
+                fill="var(--accent)"
               />
             ))}
           {triangle && (
@@ -152,7 +152,7 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
               <path
                 d={`M ${px(points[0].x)} ${py(points[0].y)} H ${px(points[1].x)} V ${py(points[1].y)}`}
                 fill="none"
-                stroke="#f2dc8c"
+                stroke="var(--point)"
                 strokeWidth="2"
                 strokeDasharray="6 4"
               />
@@ -193,7 +193,7 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
             }}>
             <circle cx={px(point.x)} cy={py(point.y)} r="22" fill="transparent" />
             <circle cx={px(point.x)} cy={py(point.y)} r={selected === choiceId ? 10 : 7}
-              fill="#101917" stroke="#f2dc8c" strokeWidth="3" />
+              fill="var(--background)" stroke="var(--point)" strokeWidth="3" />
             <text x={px(point.x) + 13} y={py(point.y) - 12}>{label.split(":")[0]}</text>
           </g>
         ))}

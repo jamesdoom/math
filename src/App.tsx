@@ -5,6 +5,8 @@ import { ChapterPage } from "./pages/ChapterPage";
 import { LessonPage } from "./pages/LessonPage";
 import { PracticePage } from "./pages/PracticePage";
 import { SessionPage } from "./pages/SessionPage";
+import { PreferencesProvider } from "./context/PreferencesContext";
+import { PreferencesPage } from "./pages/PreferencesPage";
 function Shell() {
   const { storageError } = useProgress();
   return (
@@ -20,6 +22,7 @@ function Shell() {
           </NavLink>
           <NavLink to="/chapter/4">Chapter 4</NavLink>
           <NavLink to="/practice">Practice</NavLink>
+          <NavLink to="/preferences">Settings</NavLink>
         </nav>
       </header>
       <main>
@@ -35,6 +38,7 @@ function Shell() {
           <Route path="/lesson/:lessonId" element={<LessonPage />} />
           <Route path="/practice" element={<PracticePage />} />
           <Route path="/session" element={<SessionPage />} />
+          <Route path="/preferences" element={<PreferencesPage />} />
           <Route
             path="*"
             element={
@@ -57,9 +61,11 @@ function Shell() {
 export default function App() {
   return (
     <BrowserRouter>
-      <ProgressProvider>
-        <Shell />
-      </ProgressProvider>
+      <PreferencesProvider>
+        <ProgressProvider>
+          <Shell />
+        </ProgressProvider>
+      </PreferencesProvider>
     </BrowserRouter>
   );
 }

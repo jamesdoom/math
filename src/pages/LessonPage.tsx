@@ -9,6 +9,8 @@ import { ValueTable } from "../components/learning/ValueTable";
 import { WorkedExample } from "../components/learning/WorkedExample";
 import { PracticePlayer } from "../components/practice/PracticePlayer";
 import { CoordinatePlane } from "../components/graph/CoordinatePlane";
+import { OptionalExplanation } from "../components/learning/OptionalExplanation";
+import { skillLabels } from "../utils/mastery";
 export function LessonPage() {
   const { lessonId } = useParams();
   const lesson = lessons.find((l) => l.id === lessonId);
@@ -94,7 +96,8 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
                 {current.type.replaceAll("-", " ").toUpperCase()}
               </span>
               <h2>{current.title}</h2>
-              <p className="lesson-intro">{current.body}</p>
+              {current.type === 'explanation' ? <p className="lesson-intro">{current.body}</p> :
+                current.body && <OptionalExplanation text={current.body} label="About this step" />}
               {current.type === "example" &&
               current.revealOneAtATime &&
               current.lines ? (
@@ -171,20 +174,15 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
           ) : (
             <div className="completion">
               <span className="tag">LESSON COMPLETE</span>
-              <h2>You made a connection.</h2>
+              <h2>Skill practiced: {skillLabels[lesson.skills[0]]}</h2>
               <p>
-                You worked through {lesson.title.toLowerCase()}. Your actual
-                answers update this skill’s progress.
+                You worked through {lesson.title.toLowerCase()} with examples and practice. You can stop here.
               </p>
               <div className="round-actions">
-                {nextLesson && (
-                  <Link className="primary" to={"/lesson/" + nextLesson.id}>
-                    Next lesson →
-                  </Link>
-                )}
-                <Link className="text-link" to="/">
-                  See my progress
+                <Link className="primary" to="/">
+                  Back to home
                 </Link>
+                {nextLesson && <Link className="text-link" to={"/lesson/" + nextLesson.id}>Optional: next lesson →</Link>}
                 <Link className="text-link" to="/practice">
                   Practice this chapter
                 </Link>

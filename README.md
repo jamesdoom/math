@@ -34,13 +34,17 @@ The repository uses React Router, plain CSS, React context/state, and localStora
 - `src/data/chapters/chapter4.ts`: source-linked lessons, tiny worked-example moves, guided steps, progressive explanations.
 - `src/data/chapters/chapter4Practice.ts`: original questions, authored numeric cases, graph/table data, misconception feedback.
 - `src/components/learning/WorkedExample.tsx`: one move at a time; completed graph appears after the final move.
-- `src/components/practice/PracticePlayer.tsx`: choices, targeted feedback, Hint 1 → Hint 2 → walkthrough → full solution.
+- `src/components/practice/PracticePlayer.tsx`: choices, targeted feedback, progressive clues, one worked move, simpler examples, and optional full solution.
+- `src/data/chapters/chapter4Support.ts`: eight small support examples, worked moves, and skill-specific success language, separate from mastery questions.
+- `src/context/PreferencesContext.tsx`: saved appearance, motion, and explanation preferences.
 - `src/components/graph/`: accessible native SVG coordinate plane.
 - `src/pages/`: dashboard, Chapter 4 navigation, lesson player, short practice rounds.
 - `src/utils/`: math, storage validation, pure attempt recording, replaceable mastery policy, and varied round selection.
 - `tests/chapter4.test.ts`: page scope, references, data quality, signed/fractional/decimal equations, tables, graphs, round selection, and evidence integrity.
 
 ## Progress and limits
+
+The default home activity is a graph-based short session. The earlier given-information sessions remain available and saved sessions keep their original content. Both follow the same saved-move and clear-ending behavior described below.
 
 The home screen starts a short guided session at `/session`: place the slope, place the intercept, and simplify the equation. Six original given-slope/intercept sets rotate in order. Each move saves synchronously when answered correctly or reviewed through Show solution; feedback stays visible until Next move / Finish session. Refresh resumes after saved moves. A finished session remains finished, including on the home screen, until the student explicitly chooses Do another. There is no timer, streak, deadline, or automatic daily reset. Optional sessions can contain 1–3 moves; their length is fixed at creation. Shorter sessions complete the corresponding prefix of the three moves.
 
@@ -58,6 +62,14 @@ Resume restores the lesson stage or round item; unfinished interaction screens r
 
 After verified updates, commit and push to `origin/main` as authorized in `AGENTS.md`. Private PDFs, temporary screenshots/browser tooling, dependencies, and built assets are excluded from commits.
 
+## Comfort and support
+
+Settings contains three preference groups: light/dark appearance, reduced motion (on by default and also respecting the device setting), and extra explanations shown immediately or opened on request. Essential problem statements, graphs/tables, known values, and mistake feedback remain visible. No sound plays. Preferences use the separate validated `algebra-lab.preferences.v1` key; changing them never resets progress or an active session. Save failures are explained on the settings page.
+
+Practice help offers Give me a clue, Show one move, and Try an easier example. A worked-move panel reveals one line of a similar example at a time. The easier example is a separate small interaction; neither mode advances the original problem, adds XP, or records independent evidence. Returning restores the original problem and keyboard focus. Opening either support mode marks the original step assisted, including after refresh. A full solution is still available after worked support. Lesson support uses the neutral Explain this another way label.
+
+Correct-answer feedback names the completed action, with extra reasoning controlled by the explanation preference. Session completion lists the moves practiced, including supported learning, without claiming they were mastered independently. Lesson and practice completion emphasize the practiced skill; detailed evidence remains available behind a disclosure. No new reward system, timers, streaks, diagnosis data, or assumed interest-based theme were added. Personal interests can be incorporated later with the student's input.
+
 ## Verification
 
-TypeScript, the production build, and ten domain/content/progress tests pass. An isolated browser session exercised all five complete lessons and all 30 independent questions, including worked-example next/back and keyboard controls, graph/table guidance, wrong-answer feedback, progressive help, completion, short/mixed rounds, refresh persistence, and earlier Chapter 3 storage preservation. Desktop and 390px mobile layouts had no horizontal overflow; no runtime/console errors were detected. Temporary browser tooling and screenshots live under ignored `.verification/`.
+TypeScript, the production build, and sixteen domain/content/progress/session/support tests pass. Isolated browser checks exercised all five complete lessons and all 30 independent questions, graph sessions, worked-example next/back and keyboard controls, wrong-answer feedback, progressive help, simpler examples for all five skills, completion, short/mixed rounds, refresh persistence, and earlier Chapter 3 storage preservation. Preference checks covered reload persistence, explanation disclosure, blocked storage, both themes, device/app reduced motion, and 320px/390px mobile layouts. Sampled text and graph colors met 4.5:1 contrast, and control borders met 3:1. No runtime/console errors were detected. Temporary browser tooling and screenshots live under ignored `.verification/`.

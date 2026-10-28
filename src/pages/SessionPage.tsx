@@ -25,12 +25,19 @@ export function SessionPage() {
   }, [session]); // Also persist the initial session before the first move.
   useEffect(() => { heading.current?.focus(); }, [visibleMove]);
   const finished = visibleMove >= session.length;
+  const practiced = session.kind === 'graph'
+    ? ['Finding the y-axis crossing', 'Placing the intercept in the equation', 'Using rise and run to fill the slope']
+    : ['Placing the slope beside x', 'Placing the intercept at the end', 'Writing the completed equation'];
   return <div className="start-page">
     {saveError && <p role="alert" className="callout">This browser could not save your session. You can continue, but a refresh may repeat a move.</p>}
     {finished ? <section className="start-card">
       <span className="eyebrow">SESSION COMPLETE</span>
       <h1 ref={heading} tabIndex={-1}>You’re done for today.</h1>
       <p>You completed {session.length} {session.length === 1 ? 'move' : 'moves'}. Using help counts as learning.</p>
+      <div className="session-recap">
+        <h2>What you practiced</h2>
+        <ul>{practiced.slice(0, session.completed).map(item => <li key={item}>{item}</li>)}</ul>
+      </div>
       <p>You can stop here.</p>
       <Link className="primary" to="/">Back to home</Link>
       <details className="start-details">

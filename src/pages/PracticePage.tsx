@@ -133,7 +133,11 @@ export function PracticePage() {
           {complete ? (
             <>
               <span className="tag">ROUND COMPLETE</span>
-              <h2>You made time to learn.</h2>
+              <h2>{round.selection === 'mixed' ? 'You practiced the five equation skills.' : `You practiced: ${skillLabels[round.selection]}`}</h2>
+              <p>Using help is part of learning. You can stop here.</p>
+              <details className="start-details">
+                <summary>View practice details</summary>
+                <div className="start-details-body">
               <p>
                 {evidence.filter((value) => value === "correct").length} correct
                 independently out of{" "}
@@ -146,10 +150,6 @@ export function PracticePage() {
                 {evidence.filter((value) => value === "assisted").length}{" "}
                 started with hints or a worked solution.
               </p>
-              <p>
-                Using help is part of learning. Try another varied round when
-                you feel ready.
-              </p>
               <div className="skills-panel">
                 {(round.selection === "mixed"
                   ? practiceSkills
@@ -158,9 +158,12 @@ export function PracticePage() {
                   <SkillCard key={skill} id={skill} />
                 ))}
               </div>
+                </div>
+              </details>
               <div className="round-actions">
+                <Link className="primary" to="/">Back to home</Link>
                 <button
-                  className="primary"
+                  className="text-button"
                   onClick={() => start(round.selection)}
                 >
                   Try another round →

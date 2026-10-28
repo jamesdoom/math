@@ -17,7 +17,7 @@ export function UnderstandingHelp({
         }}
       >
         {level < 0
-          ? "I don’t understand"
+          ? "Explain this another way"
           : level < explanations.length - 1
             ? "Make it simpler →"
             : "Start the explanation again"}

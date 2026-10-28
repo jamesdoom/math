@@ -36,6 +36,8 @@ export interface Choice {
   misconception?: Misconception;
 }
 export interface ProblemStep {
+  supportId?: 'parts' | 'given' | 'graph-crossing' | 'graph-intercept' | 'graph-slope' | 'graph-equation' | 'table' | 'horizontal';
+  successMessage?: string;
   id: string;
   prompt: string;
   expression: string;

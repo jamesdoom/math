@@ -29,6 +29,8 @@ export const graphSessionSets: PracticeProblem[][] = graphSessionCases.map((c, i
     { ...base, points: [], description: `Select the y-axis crossing. Candidate points: ${choices.map(p => p.label).join('; ')}. The line passes through A and C. Both axes use one unit per labeled tick.` });
   // Match authored point IDs to the question helper's stable choice IDs.
   crossing.steps[0].pointChoices = choices;
+  crossing.steps[0].supportId = 'graph-crossing';
+  crossing.steps[0].successMessage = 'You found the y-axis crossing.';
   const intercept = make(`session-graph-${index}-intercept`, 'equation-from-graph', `Known: b = ${b}. Equation: y = mx + b`,
     'The crossing stays marked. Put its y-value in the equation.', `y = mx ${ending}`,
     `The y-intercept is ${b}, so the constant term is ${ending}. The slope slot stays m.`,
@@ -36,6 +38,8 @@ export const graphSessionSets: PracticeProblem[][] = graphSessionCases.map((c, i
      [`y = (${b})x + b`, 'The intercept belongs at the end. The number beside x is the slope.']],
     [`Keep b = ${b} visible at the end of y = mx + b.`, 'A negative intercept means subtract; a positive intercept means add.'],
     { ...base, points: [{ x: 0, y: c.intercept }], description: `Marked crossing: (0, ${b}). Known: b = ${b}.` });
+  intercept.steps[0].supportId = 'graph-intercept';
+  intercept.steps[0].successMessage = 'You placed the intercept in the equation.';
   const run = 2;
   const rise = c.slope * run;
   const slope = make(`session-graph-${index}-slope`, 'equation-from-graph', `Known: b = ${b}. Rise = ${rise}; run = ${run}. m = ${rise} ÷ ${run} = ${m}. Equation: y = __x ${ending}`,
@@ -46,6 +50,8 @@ export const graphSessionSets: PracticeProblem[][] = graphSessionCases.map((c, i
     ['Slope is signed rise divided by run.', `Use ${rise} ÷ ${run}. Keep b = ${b} at the end.`],
     { ...base, slopeTriangle: true, description: `The crossing (0, ${b}) stays marked. Move right ${run} and ${rise < 0 ? 'down' : 'up'} ${Math.abs(rise)}. Rise = ${rise}; run = ${run}; slope = ${m}.` });
   slope.answer = equation(c.slope, c.intercept);
+  slope.steps[0].supportId = 'graph-slope';
+  slope.steps[0].successMessage = 'You used rise and run to fill in the slope.';
   return [crossing, intercept, slope];
 });
 

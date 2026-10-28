@@ -23,5 +23,11 @@ export const sessionSets = equationCases.filter(c => c.skill === 'equation-from-
       `The equation is ${equation(c.slope, c.intercept)}. It keeps slope ${m} and intercept ${b}.`,
       [[equation(-c.slope, c.intercept), 'Check the sign of the slope beside x.'], [equation(c.slope, -c.intercept), 'Check the sign of the constant term.']],
       ['Adding a negative number is the same as subtracting it.', `Keep m = ${m} and b = ${b}. A coefficient of 1 or −1 can be written as x or −x.`]),
-  ];
+  ].map((problem, move) => ({ ...problem, steps: problem.steps.map(step => ({
+    ...step, successMessage: [
+      'You placed the slope beside x.',
+      'You placed the intercept at the end.',
+      'You wrote the equation using both values.',
+    ][move],
+  })) }));
 });

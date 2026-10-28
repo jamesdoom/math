@@ -4,6 +4,9 @@ import { evaluateChoice } from "../../utils/linear";
 import { useProgress } from "../../context/ProgressContext";
 import { CoordinatePlane } from "../graph/CoordinatePlane";
 import { ValueTable } from "../learning/ValueTable";
+import { OptionalExplanation } from "../learning/OptionalExplanation";
+import { supportFor, successFor } from "../../data/chapters/chapter4Support";
+import { PracticeSupportPanel } from "./PracticeSupportPanel";
 export function PracticePlayer({
   problem,
   onComplete,
@@ -26,6 +29,7 @@ export function PracticePlayer({
   const [assisted, setAssisted] = useState(false);
   const [solutionShown, setSolutionShown] = useState(false);
   const [attempted, setAttempted] = useState(false);
+  const [supportMode, setSupportMode] = useState<'move' | 'example' | null>(null);
   const { recordAttempt, markAssisted } = useProgress();
   const current = problem.steps[index];
   const heading = useRef<HTMLHeadingElement>(null);
@@ -66,6 +70,19 @@ export function PracticePlayer({
     setAssisted(solutionShown);
     setAttempted(false);
   }
+  function markHelpUsed(allSteps = false) {
+    setAssisted(true);
+    if (assessmentId) {
+      (allSteps ? problem.steps : [current]).forEach(step =>
+        markAssisted(`${assessmentId}:${problem.id}:${step.id}`),
+      );
+    }
+  }
+  if (supportMode) return <PracticeSupportPanel support={supportFor(current)} mode={supportMode} onReturn={() => {
+    setSupportMode(null);
+    // The original problem keeps its answer/feedback state; restore keyboard context.
+    requestAnimationFrame(() => heading.current?.focus());
+  }} />;
   return (
     <div className="practice">
       <div className="practice-top">
@@ -108,9 +125,9 @@ export function PracticePlayer({
       {feedback && (
         <div className={`feedback ${correct ? "success" : ""}`} role="status">
           <strong>
-            {correct ? "That makes sense." : "Let’s reason it through."}
+            {correct ? successFor(current) : "Let’s look at this step."}
           </strong>
-          <p>{feedback}</p>
+          {correct ? <OptionalExplanation text={feedback} /> : <p>{feedback}</p>}
         </div>
       )}
       {correct &&
@@ -122,36 +139,37 @@ export function PracticePlayer({
         <div className="hint-area">
           <button
             className="text-button"
+            disabled={helpLevel === 4}
             onClick={() => {
               setHelpLevel((n) => Math.min(n + 1, 4));
+              markHelpUsed(helpLevel === 3);
+              if (helpLevel === 2) setSupportMode('move');
               if (helpLevel === 3) { setSolutionShown(true); onResolved?.(); }
-              setAssisted(true);
-              if (assessmentId) {
-                const steps = helpLevel === 3 ? problem.steps : [current];
-                steps.forEach((step) =>
-                  markAssisted(`${assessmentId}:${problem.id}:${step.id}`),
-                );
-              }
             }}
           >
             {
               [
-                "Hint 1",
-                "Hint 2",
-                "Walk me through it",
+                "Give me a clue",
+                "Another clue",
+                "Show one move",
                 "Show solution",
                 "Solution shown",
               ][helpLevel]
             }
           </button>
+          {helpLevel < 2 && <button className="text-button" onClick={() => {
+            markHelpUsed(); setHelpLevel(3); setSupportMode('move');
+          }}>Show one move</button>}
+          {helpLevel < 4 && <button className="text-button" onClick={() => {
+            markHelpUsed(); setSupportMode('example');
+          }}>Try an easier example</button>}
           {helpLevel > 0 && (
             <div aria-live="polite">
               {helpLevel <= 2 ? (
                 <p>{current.hints[helpLevel - 1]?.text}</p>
               ) : helpLevel === 3 ? (
                 <p>
-                  Focus on this step: {current.hints[1]?.text} Compare that rule
-                  with each choice, then select one.
+                  Your problem is still here. Use the same idea from the worked example.
                 </p>
               ) : (
                 <>
@@ -161,7 +179,7 @@ export function PracticePlayer({
                     ))}
                   </ol>
                   <p className="muted">
-                    This is an assisted review. It does not increase mastery.
+                    You reviewed this problem with help. You can move on when ready.
                   </p>
                 </>
               )}

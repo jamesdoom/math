@@ -1051,3 +1051,8 @@ select {
   .start-card .primary { width: 100%; text-align: center; }
 }
 .session-heading { font-size: clamp(28px, 4vw, 38px); letter-spacing: -1px; }
+.graph-choice { cursor: pointer; }
+.graph-choice:focus-visible { outline: none; }
+.graph-choice:focus-visible circle { stroke: #ffffff; stroke-width: 5; }
+.graph-choice[aria-disabled="true"] { cursor: default; }
+.graph-choice[aria-pressed="true"] circle { stroke-width: 5; }

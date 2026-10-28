@@ -22,7 +22,7 @@ export function Dashboard() {
         <p className="start-intro">{finished ? "Your session is complete. You can stop here." : "Build an equation, one piece at a time."}</p>
         <div className="start-task">
           <span className="eyebrow">{finished ? "SESSION COMPLETE" : "YOUR SHORT SESSION"}</span>
-          <h2>Build an equation from slope and intercept</h2>
+          <h2>{session && session.kind !== 'graph' ? 'Build an equation from slope and intercept' : 'Build an equation from a graph'}</h2>
           <p>{session?.length ?? 3} small moves. Help is available as you go.</p>
         </div>
         <Link className={finished ? "text-link" : "primary"} to="/session">

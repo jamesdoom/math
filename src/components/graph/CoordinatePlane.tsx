@@ -1,7 +1,13 @@
 import { useId } from "react";
 import type { GraphSpec, Point } from "../../types/practice";
 import { graphBounds, lineEndpoints, curveValue } from "../../utils/linear";
-export function CoordinatePlane({ spec }: { spec: GraphSpec }) {
+export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, selected }: {
+  spec: GraphSpec;
+  pointChoices?: { choiceId: string; point: Point; label: string }[];
+  onSelect?: (id: string) => void;
+  disabled?: boolean;
+  selected?: string;
+}) {
   const id = useId().replace(/:/g, "");
   const bounds = graphBounds(spec);
   const { xMin, xMax, yMin, yMax } = bounds;
@@ -56,7 +62,7 @@ export function CoordinatePlane({ spec }: { spec: GraphSpec }) {
     );
   return (
     <figure className="coordinate-plane">
-      <svg viewBox="0 0 500 480" role="img" aria-labelledby={id + "title"}>
+      <svg viewBox="0 0 500 480" role={pointChoices ? "group" : "img"} aria-labelledby={id + "title"}>
         <title id={id + "title"}>{spec.description}</title>
         <defs>
           <clipPath id={id + "clip"}>
@@ -175,6 +181,22 @@ export function CoordinatePlane({ spec }: { spec: GraphSpec }) {
             />
           ))}
         </g>
+        {pointChoices?.map(({ choiceId, point, label }) => (
+          <g key={choiceId} role="button" tabIndex={disabled ? -1 : 0}
+            aria-label={label} aria-disabled={disabled} aria-pressed={selected === choiceId}
+            className="graph-choice"
+            onClick={() => { if (!disabled) onSelect?.(choiceId); }}
+            onKeyDown={event => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault(); if (!disabled) onSelect?.(choiceId);
+              }
+            }}>
+            <circle cx={px(point.x)} cy={py(point.y)} r="22" fill="transparent" />
+            <circle cx={px(point.x)} cy={py(point.y)} r={selected === choiceId ? 10 : 7}
+              fill="#101917" stroke="#f2dc8c" strokeWidth="3" />
+            <text x={px(point.x) + 13} y={py(point.y) - 12}>{label.split(":")[0]}</text>
+          </g>
+        ))}
         <text x="250" y="474" textAnchor="middle">
           {spec.xLabel ?? "x · input"}
         </text>

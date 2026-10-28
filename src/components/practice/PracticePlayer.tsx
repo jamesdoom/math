@@ -83,10 +83,12 @@ export function PracticePlayer({
           : current.expression}
       </div>
       {current.table && <ValueTable points={current.table} />}
-      {current.graph && <CoordinatePlane spec={current.graph} />}
       <h3 ref={heading} tabIndex={-1}>
         {current.prompt}
       </h3>
+      {current.graph && <CoordinatePlane spec={current.graph}
+        pointChoices={current.pointChoices} onSelect={choose}
+        disabled={correct || helpLevel === 4} selected={correct ? current.answer : undefined} />}
       <div className="choices">
         {current.choices.map((choice) => (
           <button

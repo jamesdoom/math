@@ -45,6 +45,7 @@ export interface ProblemStep {
   explanation: string;
   hints: Hint[];
   graph?: GraphSpec;
+  pointChoices?: { choiceId: string; point: Point; label: string }[];
   table?: Point[];
 }
 export interface PracticeProblem {

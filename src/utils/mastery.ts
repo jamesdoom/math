@@ -5,11 +5,12 @@ import {
   type MasteryState,
 } from "../types/progress";
 export const skillLabels: Record<(typeof skillIds)[number], string> = {
-  "identify-m-and-b": "Identify m and b",
-  "equation-from-information": "Write from given m and b",
-  "equation-from-graph": "Write from a graph",
-  "equation-from-table": "Write from a table",
-  "horizontal-equations": "Horizontal line equations",
+  'system-solutions': 'Check a pair in both equations',
+  'graphing-systems': 'Solve systems by graphing',
+  'solution-count': 'One, no, or infinitely many solutions',
+  'elimination-add-subtract': 'Add or subtract to eliminate',
+  'elimination-scaling': 'Scale whole equations',
+  'back-substitution': 'Find the other variable and check',
 };
 export function mastery(p: SkillProgress) {
   return p.independentAttempts

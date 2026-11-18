@@ -4,10 +4,10 @@ import { useProgress } from "../context/ProgressContext";
 import {
   practiceSkills,
   independentProblemMap,
-} from "../data/chapters/chapter4Practice";
+} from "../data/chapters/chapter5Practice";
 import { PracticePlayer } from "../components/practice/PracticePlayer";
 import { SkillCard } from "../components/progress/SkillCard";
-import { lessons } from "../data/chapters/chapter4";
+import { lessons } from "../data/chapters/chapter5";
 import { skillLabels } from "../utils/mastery";
 import {
   createRound,
@@ -56,14 +56,14 @@ export function PracticePage() {
         ← My learning
       </Link>
       <div className="page-heading practice-heading">
-        <span className="eyebrow">CHAPTER 04 · KEEP BUILDING</span>
+        <span className="eyebrow">CHAPTER 05 · KEEP BUILDING</span>
         <h1>
           Practice a little.
           <br />
           <span>Understand a little more.</span>
         </h1>
         <p>
-          Section 4.1 only. Start with small steps, then write a whole equation.
+          Sections 5.1 and 5.2. Start with one move, then solve a system.
         </p>
       </div>
       {saveError && (
@@ -77,7 +77,7 @@ export function PracticePage() {
           <section className="lesson-banner">
             <div>
               <span className="tag">START SMALL</span>
-              <h2>Build the equation one piece at a time</h2>
+              <h2>Build a system solution one piece at a time</h2>
               <p>Use the guided learning path before trying a whole problem.</p>
             </div>
             <Link className="primary" to={"/lesson/" + lessons[0].id}>
@@ -87,8 +87,8 @@ export function PracticePage() {
           <section className="lesson-banner">
             <div>
               <span className="tag">A LITTLE OF EVERYTHING</span>
-              <h2>Connect the five skills</h2>
-              <p>5 problems · 1 per skill · hints available</p>
+              <h2>Connect the six skills</h2>
+              <p>{practiceSkills.length} problems · 1 per skill · clues available</p>
             </div>
             <button className="primary" onClick={() => start("mixed")}>
               Start mixed practice →
@@ -133,7 +133,7 @@ export function PracticePage() {
           {complete ? (
             <>
               <span className="tag">ROUND COMPLETE</span>
-              <h2>{round.selection === 'mixed' ? 'You practiced the five equation skills.' : `You practiced: ${skillLabels[round.selection]}`}</h2>
+              <h2>{round.selection === 'mixed' ? 'You practiced six system-solving skills.' : `You practiced: ${skillLabels[round.selection]}`}</h2>
               <p>Using help is part of learning. You can stop here.</p>
               <details className="start-details">
                 <summary>View practice details</summary>

@@ -1,75 +1,78 @@
-# Algebra Lab — Chapter 4, page 1
+# Algebra Lab - Chapter 5
 
-A student-friendly React/TypeScript/Vite app for **4.1 Writing Equations in Slope-Intercept Form**. Active exercises are limited to the attached `Ch 4. Page 1 notes.pdf` from the user's Cengage Big Ideas Algebra 1 class material. This is an original learning aid, not an official publisher product or a reproduction of the worksheet.
+A React + strict TypeScript + Vite learning app for the supplied class notes:
 
-## Learning path
+- **5.1: Solving Systems of Equations by Graphing**
+- **5.2: Solving Systems of Equations by Elimination**
 
-Five short lessons teach signed m and b, equations from given information, equations from graphs, equations from tables containing x = 0, and horizontal lines. Each has four stages:
+The current content follows only the four pages in `5.1 notes pg 1-2.pdf` and `5.2 notes pg 3-4.pdf`. See `docs/chapter-5-source-map.md` for coverage and mathematical checks. Private PDFs and renders are not committed. Earlier active curriculum is recoverable in Git history.
 
-1. One idea first.
-2. A worked example revealed one small step at a time, with back/next controls.
-3. A guided problem split into two to five decisions.
-4. Three independent checks, with progressive assistance still available.
-
-There are 30 original independent questions (six per skill). Focused rounds use three items; mixed review uses one per skill for five. Practice offers a guided-learning link before the independent checks. Fractions, decimal intercepts, negative signs, and zero slope reflect the supplied page. Later Chapter 4 topics are excluded.
-
-See the [Chapter 4 source and scope map](docs/chapter-4-source-map.md) for provenance, examples, intentional boundaries, and the teaching sequence.
-
-## Run and verify
+## Run
 
 ```sh
-npm install
+npm ci
 npm run dev
 npm run typecheck
 npm test
 npm run build
 ```
 
-On this Windows host the npm wrapper may be broken; use `& 'C:/Program Files/nodejs/node.exe' 'C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js' run dev` instead. Local URL: http://127.0.0.1:5173.
+Vercel: Vite preset, root `./`, install `npm ci`, build `npm run build`, output `dist`, no environment variables. `vercel.json` rewrites browser routes to `index.html`.
 
-The repository uses React Router, plain CSS, React context/state, and localStorage. No backend, authentication, AI, or large UI/chart framework is required. For Vercel: import `jamesdoom/math`, branch `main`, Vite preset, root `./`, install `npm ci`, build `npm run build`, output `dist`, no environment variables. The existing `vercel.json` enables direct lesson links and refreshes.
+## Student experience
 
-## Structure
+The home screen offers one clear Start with help action. Its default three-move graph session locates the first line's intercept, adds the second line, then selects a shared point. Both lines remain visible with solid/dashed styles, a legend, descriptions, and keyboard-accessible point targets plus text-button alternatives.
 
-- `src/data/chapters/chapter4.ts`: source-linked lessons, tiny worked-example moves, guided steps, progressive explanations.
-- `src/data/chapters/chapter4Practice.ts`: original questions, authored numeric cases, graph/table data, misconception feedback.
-- `src/components/learning/WorkedExample.tsx`: one move at a time; completed graph appears after the final move.
-- `src/components/practice/PracticePlayer.tsx`: choices, targeted feedback, progressive clues, one worked move, simpler examples, and optional full solution.
-- `src/data/chapters/chapter4Support.ts`: eight small support examples, worked moves, and skill-specific success language, separate from mastery questions.
-- `src/context/PreferencesContext.tsx`: saved appearance, motion, and explanation preferences.
-- `src/components/graph/`: accessible native SVG coordinate plane.
-- `src/pages/`: dashboard, Chapter 4 navigation, lesson player, short practice rounds.
-- `src/utils/`: math, storage validation, pure attempt recording, replaceable mastery policy, and varied round selection.
-- `tests/chapter4.test.ts`: page scope, references, data quality, signed/fractional/decimal equations, tables, graphs, round selection, and evidence integrity.
+Two more short-session activities cover direct elimination and scaling before elimination. Original equations stay in an aligned x/y/right-side table. Known values and transformed equations remain visible; the student does not have to memorize previous work. Activity links are under Choose another activity, and optional next-session controls are on the finish screen.
 
-## Progress and limits
+There are six focused lessons, three per section. Each has one explanation, an example revealed one move at a time, guided practice, and three checkpoint items. The independent bank has 36 original questions, six per skill. Three-question focus rounds favor less-seen items; mixed rounds contain six questions, one per skill. There are six graph, six direct-elimination, and six scaling session sets with three moves each.
 
-The default home activity is a graph-based short session. The earlier given-information sessions remain available and saved sessions keep their original content. Both follow the same saved-move and clear-ending behavior described below.
+Each completed session move saves immediately. Refresh resumes after it, while feedback remains visible until Next move / Finish session in the current visit. A finished session shows You’re done for today and stays finished until the student explicitly chooses another. Optional sessions can contain 1-3 moves; their length stays fixed after starting. Shorter sessions complete the corresponding prefix of the three moves. No timer, streak, deadline, or automatic daily reset is used. Paused activities have separate save slots so changing activity does not discard a different paused session.
 
-The home screen starts a short guided session at `/session`: place the slope, place the intercept, and simplify the equation. Six original given-slope/intercept sets rotate in order. Each move saves synchronously when answered correctly or reviewed through Show solution; feedback stays visible until Next move / Finish session. Refresh resumes after saved moves. A finished session remains finished, including on the home screen, until the student explicitly chooses Do another. There is no timer, streak, deadline, or automatic daily reset. Optional sessions can contain 1–3 moves; their length is fixed at creation. Shorter sessions complete the corresponding prefix of the three moves.
+## Learning and help
 
-Session state is validated and stored separately at `algebra-lab.chapter4.short-session.v1`. Storage failures show a warning. These guided moves contribute learning attempts and existing once-per-step XP, but never independent mastery or whole-lesson completion. Existing lessons, graph/table instruction, and independent practice remain available through navigation.
+A system solution makes BOTH original equations true. Graph lessons include rewriting into y = mx + b, signed/fractional slopes, and horizontal lines. Classification distinguishes one crossing, distinct parallel lines, and the same line. Different slopes meet once even with equal intercepts. Elimination teaches aligned addition/subtraction, negative multipliers, scaling one or both entire equations, finding the second variable, ordered-pair order, and checking both originals.
 
-New sessions default to an interactive graph sequence: select the y-axis crossing, place its intercept in the equation, then use a visible rise/run triangle to fill the slope. Six original graphs include positive, negative, fractional, and zero slopes. Points respond to click, touch, Enter, or Space, with matching HTML buttons as an alternative. The crossing and discovered facts stay visible in later moves; the final correct response shows the completed equation. A two-unit run improves triangle-label spacing on phones. These are guided learning moves, so facts and cues intentionally remain available.
+Wrong choices have targeted feedback for misconceptions such as checking only one equation, swapping coordinates, confusing parallel and coincident lines, retaining a canceled term, subtracting signs incorrectly, or forgetting to scale the right side.
 
-The optional `kind` field distinguishes graph sessions from given-information sessions. Existing saves without a kind retain their original given-information set and completed moves. The optional next-session controls allow either activity, plus a 1–3 move length. No saved session is replaced automatically.
+Help offers Give me a clue, Show one move, and Try an easier example. Separate simpler examples and one-move panels never advance the original problem or create XP/mastery evidence. Returning restores the original problem and keyboard focus. Opening support marks the original step assisted, including after refresh. Full worked solutions remain available after worked support. Lesson support offers progressive explanations through Explain this another way.
 
-Chapter 4 uses `algebra-lab.chapter4.progress.v1` and `algebra-lab.chapter4.practice-round.v1`. Older chapter records remain untouched, rather than being reset or counted toward new skills. Earlier source/curriculum files are recoverable in Git history. Existing Chapter 4 IDs should remain stable during future updates.
+Correct-answer feedback names the completed action; finish screens describe the skills practiced without claiming independent mastery. Settings retains light/dark appearance, reduced motion (on by default and respecting the device), and immediate/on-request extra explanations. Essential facts and mistake feedback remain visible. No sound plays. Settings saves do not reset learning progress.
 
-Only first unassisted answers update independent evidence; hints and feedback-assisted retries remain learning. Saved evidence prevents refreshes from creating new first answers. Correct steps earn 10 XP once per problem/step. Mastery is independent correct / independent attempts, with the existing three-correct/80% mastered threshold. It is a learning indicator, not a validated adaptive assessment. Checkpoints and practice reuse items, rather than forming reserved unseen pools.
+## Architecture
 
-Resume restores the lesson stage or round item; unfinished interaction screens restart, but first-answer/assistance evidence remains saved. Progress is local to each browser/origin and does not automatically move between localhost and deployment or between devices. The app uses authored choices, not arbitrary equation parsing or free-form graph drawing. Additional chapter material awaits further notes or user authorization.
+- `src/data/chapters/chapter5.ts`: section metadata, six lessons, worked examples, guided sequences, and resolved problem references.
+- `src/data/chapters/chapter5Practice.ts`: authored numeric cases, 36 questions, choices, hints, and misconception feedback.
+- `src/data/chapters/chapter5Sessions.ts`: three-move activities and their labels/recaps.
+- `src/data/chapters/chapter5Support.ts`: smaller support examples and success feedback per skill.
+- `src/types/`: curriculum, practice, equation/system, and progress domain types. Content stays separate from React presentation.
+- `src/utils/systems.ts`: equation formatting, signed scaling/combining, numeric checks, and solution classification.
+- `src/components/graph/CoordinatePlane.tsx`: native SVG plot with optional second line, legends, and accessible point selection.
+- `src/components/learning/EquationSystem.tsx`: aligned original-equation table.
+- `src/context/ProgressContext.tsx`, `src/utils/progress.ts`, `mastery.ts`, and `storage.ts`: persistence and replaceable evidence/mastery policy.
+- `src/utils/shortSession.ts` and `practiceRounds.ts`: validated session/round state and activity selection.
+- `src/context/PreferencesContext.tsx`: appearance and help preferences.
+- `tests/chapter5.test.ts`: scope, arithmetic, independent answers, session coherence, validation, isolation, and evidence integrity.
 
-After verified updates, commit and push to `origin/main` as authorized in `AGENTS.md`. Private PDFs, temporary screenshots/browser tooling, dependencies, and built assets are excluded from commits.
+To add another lesson within the authorized scope, add original problem data for its skill, a guided sequence, and a lesson record with section/source/support and the four lesson stages. Add numeric solution proofs and verify the resulting browser flow. Do not change existing IDs for already-used questions or lessons.
 
-## Comfort and support
+## Progress
 
-Settings contains three preference groups: light/dark appearance, reduced motion (on by default and also respecting the device setting), and extra explanations shown immediately or opened on request. Essential problem statements, graphs/tables, known values, and mistake feedback remain visible. No sound plays. Preferences use the separate validated `algebra-lab.preferences.v1` key; changing them never resets progress or an active session. Save failures are explained on the settings page.
+Chapter 5 keys:
 
-Practice help offers Give me a clue, Show one move, and Try an easier example. A worked-move panel reveals one line of a similar example at a time. The easier example is a separate small interaction; neither mode advances the original problem, adds XP, or records independent evidence. Returning restores the original problem and keyboard focus. Opening either support mode marks the original step assisted, including after refresh. A full solution is still available after worked support. Lesson support uses the neutral Explain this another way label.
+- `algebra-lab.chapter5.progress.v1`
+- `algebra-lab.chapter5.practice-round.v1`
+- `algebra-lab.chapter5.short-session.v1` (last activity)
+- `algebra-lab.chapter5.short-session.v1.graph`, `.elimination`, `.scaling` (activity slots)
 
-Correct-answer feedback names the completed action, with extra reasoning controlled by the explanation preference. Session completion lists the moves practiced, including supported learning, without claiming they were mastered independently. Lesson and practice completion emphasize the practiced skill; detailed evidence remains available behind a disclosure. No new reward system, timers, streaks, diagnosis data, or assumed interest-based theme were added. Personal interests can be incorporated later with the student's input.
+Earlier Chapter 4/3/2 browser keys are left untouched. They are not interpreted as Chapter 5 performance. Preferences stay at `algebra-lab.preferences.v1` across the content change. Chapter 5 begins with zero actual progress, not demo scores.
 
-## Verification
+Skill mastery is first unassisted correct answers divided by first unassisted attempts. Three independent correct answers and at least 80% produce MASTERED; other states are NOT_STARTED, LEARNING, and PRACTICING. Saved per-round/step evidence prevents retries or refreshes from rewriting first-answer results. Guided work contributes learning attempts and existing once-per-step XP, but never independent mastery. Session completion is separate from lesson completion. The mastery indicator is not a validated adaptive assessment.
 
-TypeScript, the production build, and sixteen domain/content/progress/session/support tests pass. Isolated browser checks exercised all five complete lessons and all 30 independent questions, graph sessions, worked-example next/back and keyboard controls, wrong-answer feedback, progressive help, simpler examples for all five skills, completion, short/mixed rounds, refresh persistence, and earlier Chapter 3 storage preservation. Preference checks covered reload persistence, explanation disclosure, blocked storage, both themes, device/app reduced motion, and 320px/390px mobile layouts. Sampled text and graph colors met 4.5:1 contrast, and control borders met 3:1. No runtime/console errors were detected. Temporary browser tooling and screenshots live under ignored `.verification/`.
+## Verification and limits
+
+TypeScript, the production build, and 16 curriculum/math/progress tests pass. Isolated browser checks exercised all six complete lessons, all 36 independent questions, all 18 three-move sets, keyboard graph selection, feedback, clues, worked support, easier examples, refresh/finish persistence, optional lengths, paused-activity switching, prior chapter isolation, and both themes. Desktop and 390px mobile layouts were checked without horizontal overflow or runtime/console errors. Verification files, dependencies, and build output remain ignored.
+
+Scope ends at the supplied 5.1/5.2 notes. There is no later-section content, word-problem unit, substitution as a separate method, backend, authentication, AI, or free-form algebra parser. Graph practice uses authored point choices rather than arbitrary freehand plotting. Progress remains local to the browser/origin and does not sync between devices or localhost and deployment. Intermediate help screens can restart on refresh; completed moves and assistance evidence remain saved.
+
+After verified updates, commit and push to `origin/main` as authorized in `AGENTS.md`.

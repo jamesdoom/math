@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useProgress } from "../context/ProgressContext";
-import { lessons } from "../data/chapters/chapter4";
+import { lessons } from "../data/chapters/chapter5";
 import { skillIds } from "../types/progress";
 import { overallMastery } from "../utils/mastery";
 import { SkillCard } from "../components/progress/SkillCard";
 import { parseSession, SESSION_KEY } from "../utils/shortSession";
+import { sessionInfo, sessionKinds } from "../data/chapters/chapter5Sessions";
 
 export function Dashboard() {
   const { progress } = useProgress();
@@ -17,12 +18,12 @@ export function Dashboard() {
   return (
     <div className="start-page">
       <section className="start-card" aria-labelledby="start-title">
-        <span className="eyebrow">CHAPTER 4 · WRITING LINEAR EQUATIONS</span>
+        <span className="eyebrow">CHAPTER 5 · SYSTEMS OF EQUATIONS</span>
         <h1 id="start-title">{finished ? "You’re done for today." : "One small step today."}</h1>
-        <p className="start-intro">{finished ? "Your session is complete. You can stop here." : "Build an equation, one piece at a time."}</p>
+        <p className="start-intro">{finished ? "Your session is complete. You can stop here." : "Find one pair that works in both equations."}</p>
         <div className="start-task">
           <span className="eyebrow">{finished ? "SESSION COMPLETE" : "YOUR SHORT SESSION"}</span>
-          <h2>{session && session.kind !== 'graph' ? 'Build an equation from slope and intercept' : 'Build an equation from a graph'}</h2>
+          <h2>{sessionInfo[session?.kind ?? 'graph'].title}</h2>
           <p>{session?.length ?? 3} small moves. Help is available as you go.</p>
         </div>
         <Link className={finished ? "text-link" : "primary"} to="/session">
@@ -46,8 +47,9 @@ export function Dashboard() {
       <details className="start-details">
         <summary>Choose another activity</summary>
         <div className="start-details-body start-alternatives">
-          <Link className="text-link" to="/chapter/4">Browse Chapter 4 lessons</Link>
+          <Link className="text-link" to="/chapter/5">Browse Chapter 5 lessons</Link>
           <Link className="text-link" to="/practice">Choose independent practice</Link>
+          {sessionKinds.map(kind => <Link key={kind} className="text-link" to={'/session?activity='+kind}>{sessionInfo[kind].title}</Link>)}
         </div>
       </details>
     </div>

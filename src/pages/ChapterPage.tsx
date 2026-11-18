@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom";
-import { chapter4 } from "../data/chapters/chapter4";
+import { chapter5 } from "../data/chapters/chapter5";
 import { useProgress } from "../context/ProgressContext";
 export function ChapterPage() {
   const { progress } = useProgress();
   return (
     <>
       <div className="page-heading">
-        <span className="eyebrow">CHAPTER 04 · YOUR ROADMAP</span>
-        <h1>Writing Linear Equations</h1>
-        <p>{chapter4.description}</p>
+        <span className="eyebrow">CHAPTER 05 · YOUR ROADMAP</span>
+        <h1>Systems of Equations</h1>
+        <p>{chapter5.description}</p>
       </div>
       <aside className="callout">
-        Start small: find m, find b, then build the equation. This learning path
-        covers only section 4.1 on your supplied page 1. Later Chapter 4 topics
-        are not included yet.
+        Start with one pair and two checks. Then find shared points on graphs,
+        or eliminate a variable using aligned equations. This path follows only
+        the supplied notes for sections 5.1 and 5.2.
       </aside>
       <div className="topic-grid">
-        {chapter4.topics.map((topic, index) => (
+        {chapter5.topics.map((topic, index) => (
           <section className="topic-card" key={topic.id}>
             <div className="card-top">
               <span className="topic-number">0{index + 1}</span>
@@ -36,9 +36,11 @@ export function ChapterPage() {
               ))}
             </ul>
             {topic.lessons.map((l) => (
-              <div key={l.id}>
+              <div key={l.id} className="chapter-lesson">
+                <h3>{l.title}</h3>
                 <p className="source-note">{l.source}</p>
-                <Link className="primary" to={"/lesson/" + l.id}>
+                <Link className="primary" to={"/lesson/" + l.id}
+                  aria-label={(progress.completedLessons.includes(l.id) ? 'Review ' : 'Open ') + l.title}>
                   {progress.completedLessons.includes(l.id)
                     ? "Review lesson"
                     : "Open lesson"}{" "}

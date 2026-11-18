@@ -20,7 +20,7 @@ function Shell() {
           <NavLink to="/" end>
             My learning
           </NavLink>
-          <NavLink to="/chapter/4">Chapter 4</NavLink>
+          <NavLink to="/chapter/5">Chapter 5</NavLink>
           <NavLink to="/practice">Practice</NavLink>
           <NavLink to="/preferences">Settings</NavLink>
         </nav>
@@ -34,7 +34,7 @@ function Shell() {
         )}
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/chapter/4" element={<ChapterPage />} />
+          <Route path="/chapter/5" element={<ChapterPage />} />
           <Route path="/lesson/:lessonId" element={<LessonPage />} />
           <Route path="/practice" element={<PracticePage />} />
           <Route path="/session" element={<SessionPage />} />
@@ -51,7 +51,7 @@ function Shell() {
         </Routes>
       </main>
       <footer>
-        <span>Algebra Lab · Chapter 4</span>
+        <span>Algebra Lab · Chapter 5</span>
         <span>Understand the why. Build the confidence.</span>
         <span>Saved on this browser</span>
       </footer>

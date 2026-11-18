@@ -3,6 +3,8 @@ export interface Point {
   x: number;
   y: number;
 }
+export interface StandardEquation { a: number; b: number; c: number }
+export interface LinearSystem { first: StandardEquation; second: StandardEquation }
 export type GraphModel =
   | { kind: "line"; slope: number; intercept: number }
   | { kind: "vertical"; x: number }
@@ -14,6 +16,7 @@ export type GraphModel =
     }
   | { kind: "points"; points: Point[] };
 export interface GraphSpec {
+  secondLine?: { slope: number; intercept: number };
   domain?: { min: number; max: number };
   slopeTriangle?: boolean;
   model: GraphModel;
@@ -36,7 +39,8 @@ export interface Choice {
   misconception?: Misconception;
 }
 export interface ProblemStep {
-  supportId?: 'parts' | 'given' | 'graph-crossing' | 'graph-intercept' | 'graph-slope' | 'graph-equation' | 'table' | 'horizontal';
+  system?: LinearSystem;
+  supportId?: SkillId;
   successMessage?: string;
   id: string;
   prompt: string;
@@ -55,7 +59,7 @@ export interface PracticeProblem {
   topicId: string;
   prompt: string;
   problemType:
-    "evaluation" | "graph" | "features" | "slope" | "equation" | "model";
+    "evaluation" | "graph" | "features" | "slope" | "equation" | "model" | "system";
   difficulty: "introductory" | "standard";
   mode: "guided" | "independent";
   steps: ProblemStep[];

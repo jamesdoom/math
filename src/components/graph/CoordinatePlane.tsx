@@ -41,6 +41,9 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
         : [];
   const points: Point[] =
     spec.model.kind === "points" ? spec.model.points : (spec.points ?? []);
+  const secondEndpoints = spec.secondLine
+    ? lineEndpoints(spec.secondLine.slope, spec.secondLine.intercept, drawingBounds)
+    : [];
   const model = spec.model;
   const curve =
     model.kind === "curve"
@@ -62,6 +65,10 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
     );
   return (
     <figure className="coordinate-plane">
+      {spec.secondLine && <div className="graph-key" aria-label="Line styles">
+        <span className="line-a-key">A: solid line</span>
+        <span className="line-b-key">B: dashed line</span>
+      </div>}
       <svg viewBox="0 0 500 480" role={pointChoices ? "group" : "img"} aria-labelledby={id + "title"}>
         <title id={id + "title"}>{spec.description}</title>
         <defs>
@@ -78,6 +85,10 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
             orient="auto-start-reverse"
           >
             <path d="M0 0 L10 5 L0 10Z" fill="var(--accent)" />
+          </marker>
+          <marker id={id + "arrowB"} viewBox="0 0 10 10" refX="5" refY="5"
+            markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10Z" fill="var(--point)" />
           </marker>
         </defs>
         {xs.map((x) => (
@@ -126,6 +137,10 @@ export function CoordinatePlane({ spec, pointChoices, onSelect, disabled, select
               markerEnd={spec.domain ? undefined : "url(#" + id + "arrow)"}
             />
           )}{" "}
+          {secondEndpoints.length === 2 && <line className="graph-line-b"
+            x1={px(secondEndpoints[0].x)} y1={py(secondEndpoints[0].y)}
+            x2={px(secondEndpoints[1].x)} y2={py(secondEndpoints[1].y)}
+            markerStart={"url(#" + id + "arrowB)"} markerEnd={"url(#" + id + "arrowB)"} />}
           {curve.length > 0 && (
             <polyline
               className="graph-curve"

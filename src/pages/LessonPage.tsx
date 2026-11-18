@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { lessons, problems } from "../data/chapters/chapter4";
+import { lessons, problems } from "../data/chapters/chapter5";
 import type { Lesson } from "../types/curriculum";
 import { useProgress } from "../context/ProgressContext";
 import { GraphExplorer } from "../components/learning/GraphExplorer";
@@ -19,7 +19,7 @@ export function LessonPage() {
   ) : (
     <>
       <h1>Lesson not found</h1>
-      <Link to="/chapter/4">Explore Chapter 4</Link>
+      <Link to="/chapter/5">Explore Chapter 5</Link>
     </>
   );
 }
@@ -50,8 +50,8 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
   return (
     <>
       <div className="lesson-heading">
-        <Link className="text-link" to="/chapter/4">
-          ← Chapter 4
+        <Link className="text-link" to="/chapter/5">
+          ← Chapter 5
         </Link>
         <span className="muted">
           {Math.min(position + 1, lesson.steps.length)} / {lesson.steps.length}{" "}

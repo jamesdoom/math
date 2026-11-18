@@ -28,6 +28,7 @@ export type LessonStep =
       problemIds: string[];
     };
 export interface Lesson {
+  section: string;
   id: string;
   title: string;
   description: string;

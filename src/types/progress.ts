@@ -1,19 +1,10 @@
 export const skillIds = [
-  "identify-m-and-b",
-  "equation-from-information",
-  "equation-from-graph",
-  "equation-from-table",
-  "horizontal-equations",
+  'system-solutions', 'graphing-systems', 'solution-count',
+  'elimination-add-subtract', 'elimination-scaling', 'back-substitution',
 ] as const;
 export type SkillId = (typeof skillIds)[number];
-export type MasteryState =
-  "NOT_STARTED" | "LEARNING" | "PRACTICING" | "MASTERED";
-export interface SkillProgress {
-  attempts: number;
-  correct: number;
-  independentAttempts: number;
-  independentCorrect: number;
-}
+export type MasteryState = 'NOT_STARTED' | 'LEARNING' | 'PRACTICING' | 'MASTERED';
+export interface SkillProgress { attempts: number; correct: number; independentAttempts: number; independentCorrect: number }
 export interface StudentProgress {
   version: 1;
   skills: Record<SkillId, SkillProgress>;
@@ -21,6 +12,6 @@ export interface StudentProgress {
   lessonPositions: Record<string, number>;
   awardedSteps: string[];
   misconceptions: Record<string, number>;
-  practiceEvidence: Record<string, "correct" | "incorrect" | "assisted">;
+  practiceEvidence: Record<string, 'correct' | 'incorrect' | 'assisted'>;
   xp: number;
 }

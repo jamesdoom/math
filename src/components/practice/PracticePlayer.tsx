@@ -5,8 +5,9 @@ import { useProgress } from "../../context/ProgressContext";
 import { CoordinatePlane } from "../graph/CoordinatePlane";
 import { ValueTable } from "../learning/ValueTable";
 import { OptionalExplanation } from "../learning/OptionalExplanation";
-import { supportFor, successFor } from "../../data/chapters/chapter4Support";
+import { supportFor, successFor } from "../../data/chapters/chapter5Support";
 import { PracticeSupportPanel } from "./PracticeSupportPanel";
+import { EquationSystem } from "../learning/EquationSystem";
 export function PracticePlayer({
   problem,
   onComplete,
@@ -32,6 +33,8 @@ export function PracticePlayer({
   const [supportMode, setSupportMode] = useState<'move' | 'example' | null>(null);
   const { recordAttempt, markAssisted } = useProgress();
   const current = problem.steps[index];
+  const expression = correct && index === problem.steps.length - 1 ? problem.answer :
+    current.expression || (correct ? current.choices.find(choice=>choice.id===current.answer)?.label : '');
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     if (index > 0) heading.current?.focus();
@@ -94,11 +97,10 @@ export function PracticePlayer({
         </span>}
       </div>
       <p>{problem.prompt}</p>
-      <div className="equation">
-        {correct && index === problem.steps.length - 1
-          ? problem.answer
-          : current.expression}
-      </div>
+      {current.system && <EquationSystem system={current.system} />}
+      {expression && <div className="equation">
+        {expression}
+      </div>}
       {current.table && <ValueTable points={current.table} />}
       <h3 ref={heading} tabIndex={-1}>
         {current.prompt}

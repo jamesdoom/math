@@ -1137,3 +1137,17 @@ input { accent-color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+.equation { white-space: pre-line; }
+.graph-line-b { stroke: var(--point); stroke-width: 3; stroke-dasharray: 8 5; }
+.graph-key { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; font-size: 12px; margin-bottom: 8px; }
+.graph-key span { border-bottom: 3px solid var(--accent); padding-bottom: 4px; }
+.graph-key .line-b-key { border-bottom-style: dashed; border-bottom-color: var(--point); }
+.equation-system { width: 100%; border-collapse: collapse; margin: 22px 0; background: var(--inset); border: 1px solid var(--border); table-layout: fixed; }
+.equation-system caption { text-align: left; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.equation-system thead th { color: var(--muted); font-size: 10px; font-weight: 400; padding: 8px 2px; overflow-wrap: anywhere; }
+.equation-system td { font: clamp(16px, 3vw, 25px) Georgia, serif; text-align: center; padding: 12px 2px; overflow-wrap: anywhere; }
+.equation-system tbody th { font-size: 13px; font-weight: 500; }
+.equation-system tbody tr + tr { border-top: 1px solid var(--border); }
+.choices button { white-space: pre-line; line-height: 1.6; }
+.chapter-lesson { border-top: 1px solid var(--border); padding: 20px 0 8px; margin-top: 20px; }
+.chapter-lesson h3 { font-size: 17px; margin: 0 0 10px; }

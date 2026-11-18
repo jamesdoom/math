@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { PracticeSupport } from '../../data/chapters/chapter4Support';
+import type { PracticeSupport } from '../../data/chapters/chapter5Support';
 import { CoordinatePlane } from '../graph/CoordinatePlane';
 import { ValueTable } from '../learning/ValueTable';
 import { evaluateChoice } from '../../utils/linear';
